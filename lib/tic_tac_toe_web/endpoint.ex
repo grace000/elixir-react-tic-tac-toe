@@ -2,7 +2,7 @@ defmodule TicTacToeWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :tic_tac_toe
 
   socket "/socket", TicTacToeWeb.UserSocket,
-    websocket: true,
+    websocket: [timeout: 45_000],
     longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
