@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :tic_tac_toe, TicTacToeWeb.Endpoint,
-  http: [:inet6, port: System.get_env("PORT") || 4000],
+  http: [port: System.get_env("PORT")],
   url: [scheme: "https", host: "glacial-journey-52850.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
@@ -71,5 +71,3 @@ config :logger, level: :info
 # Finally import the config/prod.secret.exs which should be versioned
 # separately.
 import_config "prod.secret.exs"
-
-http: [port: System.get_env("PORT")]
