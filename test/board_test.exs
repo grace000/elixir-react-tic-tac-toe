@@ -54,34 +54,6 @@ defmodule BoardTest do
         end
     end
 
-    describe "current_marks" do
-        test "return board with 9 empty symbols when board has no player marks" do
-            board = Board.empty_board
-
-             assert Board.current_marks(board) == [:empty,
-                                                    :empty,
-                                                    :empty,
-                                                    :empty, 
-                                                    :empty, 
-                                                    :empty,
-                                                    :empty,
-                                                    :empty, 
-                                                    :empty]
-        end
-
-        test "return board with 8 empty symbols when board has one player mark" do
-            board = Board.empty_board
-            updated_board = Board.update(board, 2, :player_one)
-
-             assert Board.current_marks(updated_board) == [:empty,
-                                                    :empty,
-                                                    :player_one,
-                                                    :empty, 
-                                                    :empty, 
-                                                    :empty,
-                                                    :empty,
-                                                    :empty, 
-                                                    :empty]
-        end
-    end
+    #tododescribe "current_marks" do
+    # end
   end
