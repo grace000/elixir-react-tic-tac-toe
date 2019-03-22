@@ -1,0 +1,9 @@
+.square {
+    /* padding: 5em; */
+    width: 15em;
+    height: 10em;
+    margin: 1rem;
+    background: #eee;
+    border-radius: 6px;
+    border-color: #2f2d2d;
+}
