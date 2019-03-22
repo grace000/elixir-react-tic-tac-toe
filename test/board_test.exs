@@ -53,4 +53,20 @@ defmodule BoardTest do
             assert Board.get_board_moves(board_2) == [0,1]
         end
     end
+
+    describe "current_marks" do
+        test "return board with 9 empty symbols when board has no player marks" do
+            board = Board.empty_board
+
+             assert Board.current_marks(board) == [:empty,
+                                                    :empty,
+                                                    :empty,
+                                                    :empty, 
+                                                    :empty, 
+                                                    :empty,
+                                                    :empty,
+                                                    :empty, 
+                                                    :empty]
+        end
+    end
   end
