@@ -17,6 +17,7 @@ defmodule TicTacToeWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/boardstatus", BoardController, :board_status
   end
 
   # Other scopes may use custom stacks.
