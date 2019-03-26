@@ -19,7 +19,7 @@ defmodule GameTest do
                                                 player_one: "x",
                                                 player_two: "o",
                                                 current_player: :player_one, 
-                                                board: %{player_one: 1}}
+                                                board: %{1 => :player_one}}
         end
 
         test "make move updates game struct after first time" do
@@ -30,7 +30,7 @@ defmodule GameTest do
                                                 player_one: "x",
                                                 player_two: "o",
                                                 current_player: :player_one, 
-                                                board: %{player_one: 1, player_two: 3}}
+                                                board: %{1 => :player_one, 3 => :player_two}}
         end
     end
 end
