@@ -8,7 +8,6 @@ class Board extends Component {
         this.state = {
             moves: []
         }
-
     }
 
     getBoardStatus() {
