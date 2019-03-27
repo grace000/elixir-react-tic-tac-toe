@@ -6,17 +6,17 @@ class Board extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            moves: []
+            moves: Array(9)
         }
     }
 
-    getBoardStatus() {
+    componentDidMount() {
         axios.get('/boardstatus')
         .then((response) => {
-            let data = JSON.stringify(response.data);
-            console.log(data)
+            let data = response.data;
+            let reduceData = Object.values(data)
             this.setState({
-                moves: data
+                moves: reduceData
             })
         }).catch(error => console.log(error))
     }
@@ -24,7 +24,7 @@ class Board extends Component {
     renderSquare(i) {
         return (
           <Square
-            value={this.props.squares[i]}
+            value={this.state.moves[i] || "-"}
           />
         );
     }
@@ -32,8 +32,7 @@ class Board extends Component {
     render() {
         return (
             <div>
-                <p>{this.state.moves}</p>
-                <button onClick={this.getBoardStatus.bind(this)}></button>
+                {/* <button onClick={this.getBoardStatus.bind(this)}></button> */}
                 <div className="board-row">
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}

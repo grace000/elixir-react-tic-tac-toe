@@ -5,8 +5,7 @@ defmodule TicTacToeWeb.BoardController do
     alias TicTacToe.Game, as: Game
   
     def board_status(conn, _params) do
-        
-        body = Jason.encode!(%{0 => "X", 1 => "O", 2 => "X"})
+        body = Jason.encode!(%{0 => "X", 1 => "O", 2 => "X", 3 => "O", 4 => "X"})
 
         conn
         |> put_status(200)
