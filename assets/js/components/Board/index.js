@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Square from './square'
+import Square from '../Square'
 import axios from 'axios'
 
 class Board extends Component {
@@ -21,9 +21,19 @@ class Board extends Component {
         }).catch(error => console.log(error))
     }
 
+    handleClick(i) {
+        const moves = this.state.moves.slice();
+        moves[i] = "X";
+        this.setState({
+            moves: moves
+        });
+    }
+
     renderSquare(i) {
+        
         return (
           <Square
+            onClick={() => this.handleClick(i)}
             value={this.state.moves[i] || "-"}
           />
         );
@@ -32,7 +42,6 @@ class Board extends Component {
     render() {
         return (
             <div>
-                {/* <button onClick={this.getBoardStatus.bind(this)}></button> */}
                 <div className="board-row">
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
