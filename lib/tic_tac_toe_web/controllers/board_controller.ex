@@ -1,19 +1,19 @@
 defmodule TicTacToeWeb.BoardController do
     use TicTacToeWeb, :controller
   
-    def post_move(conn, _params) do
-        conn  
+    def post_move(connection, _params) do
+        connection  
         |> put_status(:ok)
         |> send_resp(200, "ok")
     end
 
-    def fetch_board_update_request(conn) do
-        response = conn.body_params
-        data = Map.fetch(response, "data")
+    def fetch_board_update_request(connection) do
+        response = connection.body_params
+        Map.fetch(response, "data")
     end
 
-    def create_move(conn, _params) do
-        fetch_board_update_request(conn)
-        post_move(conn, _params)
+    def create_move(connection, _params) do
+        fetch_board_update_request(connection)
+        post_move(connection, _params)
     end
 end
