@@ -11,4 +11,16 @@ defmodule TicTacToeWeb.BoardController do
         |> put_status(200)
         |> text(body)
     end
+
+    def post_move(conn, _params) do
+        update_board_status(conn)
+        
+        conn   
+        |> put_status(:ok)
+        |> send_resp(200, "ok")
+    end
+
+    def update_board_status(conn) do
+       IO.inspect conn.body_params
+    end
 end

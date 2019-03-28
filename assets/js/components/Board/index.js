@@ -27,6 +27,16 @@ class Board extends Component {
         this.setState({
             moves: moves
         });
+        this.postNewMark()
+    }
+
+    postNewMark() {
+        axios.post('/api/boardstatus', {
+            headers: {"Content-Type": "application/json"},
+            data: {
+                moves: this.state.moves
+            }
+        });
     }
 
     renderSquare(i) {

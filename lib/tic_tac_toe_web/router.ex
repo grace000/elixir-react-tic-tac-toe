@@ -21,7 +21,8 @@ defmodule TicTacToeWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", TicTacToeWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", TicTacToeWeb do
+    pipe_through :api
+    post "/boardstatus", BoardController, :post_move
+  end
 end
