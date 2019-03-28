@@ -10,9 +10,9 @@ class Board extends Component {
         }
     }
 
-    selectSquare(i) {
+    selectSquare(position_number) {
         const moves = this.state.moves.slice();
-        moves[i] = "X";
+        moves[position_number] = "X";
         this.setState({
             moves: moves
         });
@@ -28,12 +28,12 @@ class Board extends Component {
         });
     }
 
-    renderSquare(i) {
+    renderSquare(position_number) {
         
         return (
           <Square
-            onClick={() => this.selectSquare(i)}
-            value={this.state.moves[i] || "-"}
+            onClick={() => this.selectSquare(position_number)}
+            value={this.state.moves[position_number] || "-"}
           />
         );
     }
