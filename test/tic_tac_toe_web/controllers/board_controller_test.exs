@@ -5,7 +5,7 @@ defmodule TicTacToeWeb.BoardControllerTest do
 
     describe "post_move" do
         test " it receives connection and returns ok response", %{conn: conn} do
-            conn = build_conn(:post, "/api/boardstatus", %{"moves" => [nil, nil, nil, nil, nil, nil, nil, nil, nil]})
+            conn = build_conn(:post, "/api/createmove", %{"moves" => [nil, nil, nil, nil, nil, nil, nil, nil, nil]})
             
             assert conn.params ==  %{"moves" => [nil, nil, nil, nil, nil, nil, nil, nil, nil]}
         end
@@ -18,7 +18,7 @@ defmodule TicTacToeWeb.BoardControllerTest do
                 "headers" => %{"Content-Type" => "application/json"}
             }
             
-            conn = build_conn(:post, "/api/boardstatus", data)
+            conn = build_conn(:post, "/api/createmove", data)
             
             assert  Controller.fetch_board_update_request(conn) == {:ok, %{"moves" => [nil, nil, nil, "X", nil, nil, nil, nil, nil]}}
         end
