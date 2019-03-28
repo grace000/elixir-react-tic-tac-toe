@@ -1,11 +1,39 @@
 import React, { Component } from 'react';
-import Square from './square'
+import Square from '../Square'
+import axios from 'axios'
 
 class Board extends Component {
-    renderSquare(i) {
+    constructor(props) {
+        super(props)
+        this.state = {
+            moves: Array(9)
+        }
+    }
+
+    selectSquare(position_number) {
+        const moves = this.state.moves.slice();
+        moves[position_number] = "X";
+        this.setState({
+            moves: moves
+        });
+        this.postNewMark()
+    }
+
+    postNewMark() {
+        axios.post('/api/boardstatus', {
+            headers: {"Content-Type": "application/json"},
+            data: {
+                moves: this.state.moves
+            }
+        });
+    }
+
+    renderSquare(position_number) {
+        
         return (
           <Square
-            value={this.props.squares[i]}
+            onClick={() => this.selectSquare(position_number)}
+            value={this.state.moves[position_number] || "-"}
           />
         );
     }
