@@ -10,17 +10,6 @@ class Board extends Component {
         }
     }
 
-    componentDidMount() {
-        axios.get('/boardstatus')
-        .then((response) => {
-            let data = response.data;
-            let reduceData = Object.values(data)
-            this.setState({
-                moves: reduceData
-            })
-        }).catch(error => console.log(error))
-    }
-
     selectSquare(i) {
         const moves = this.state.moves.slice();
         moves[i] = "X";
