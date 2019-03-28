@@ -21,7 +21,7 @@ class Board extends Component {
         }).catch(error => console.log(error))
     }
 
-    handleClick(i) {
+    selectSquare(i) {
         const moves = this.state.moves.slice();
         moves[i] = "X";
         this.setState({
@@ -43,7 +43,7 @@ class Board extends Component {
         
         return (
           <Square
-            onClick={() => this.handleClick(i)}
+            onClick={() => this.selectSquare(i)}
             value={this.state.moves[i] || "-"}
           />
         );
