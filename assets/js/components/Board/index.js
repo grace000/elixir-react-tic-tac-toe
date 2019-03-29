@@ -14,6 +14,13 @@ class Board extends Component {
         }
     }
 
+    componentDidMount() {
+        axios.get('/newgame')
+        .then((response) => {
+            console.log(response);
+        }).catch(error => console.log(error))
+    }
+
     getCurrentPlayer() {
         if (this.state.current_player == "X") {
             this.setState({
