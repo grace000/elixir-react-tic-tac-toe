@@ -17,12 +17,6 @@ class HomePage extends Component {
         <Main>
           <section className="phx-hero">
             <h1>Welcome to Tic Tac Toe!</h1>
-            <p>
-              
-            </p>
-            <p>
-            Player one, you'll be playing with "X". Please select a position on the board!
-            </p>
           </section>
           <section>
             <Board squares={this.state.squares}/>

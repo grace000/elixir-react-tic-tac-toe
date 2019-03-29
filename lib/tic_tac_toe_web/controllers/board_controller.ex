@@ -1,6 +1,6 @@
 defmodule TicTacToeWeb.BoardController do
     use TicTacToeWeb, :controller
-  
+    
     def post_move(connection, _params) do
         connection  
         |> put_status(:ok)

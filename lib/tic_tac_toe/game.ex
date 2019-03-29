@@ -2,17 +2,14 @@ defmodule TicTacToe.Game do
     alias __MODULE__
 
     alias TicTacToe.Board, as: Board
-
-    @player_one "x"
-    @player_two "o"
     
     defstruct [:game_status, :player_one, :player_two, :current_player, :board]
 
     def setup_new_game do
-       %Game{game_status: :in_progress, 
-              player_one: @player_one,
-              player_two: @player_two,
-              current_player: :player_one,
+       %Game{game_status: "in progress", 
+              player_one: "X",
+              player_two: "O",
+              current_player: "X",
               board: Board.empty_board}
     end
 
