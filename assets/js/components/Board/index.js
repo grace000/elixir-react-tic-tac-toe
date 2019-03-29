@@ -7,34 +7,44 @@ class Board extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            moves: Array(9),
-            current_player: " ",
+            gameStatus: "",
+            moves: [],
+            currentPlayer: "",
             message: "Player one,",
-            error: " "
+            error: ""
         }
     }
 
     componentDidMount() {
         axios.get('/newgame')
         .then((response) => {
-            console.log(response);
+            let data = response.data;
+            let boardData = data.board;
+            let currentPlayer = data.current_player;
+            let gameStatus = data.game_status;
+            let reduceBoard = Object.values(boardData)
+            this.setState({
+                gameStatus: gameStatus,
+                moves: reduceBoard,
+                currentPlayer: currentPlayer,
+            })
         }).catch(error => console.log(error))
     }
 
     getCurrentPlayer() {
-        if (this.state.current_player == "X") {
+        if (this.state.currentPlayer == "X") {
             this.setState({
-                current_player: "O",
-                message: "Player one,"
-            })
-            return "O"
-        } 
-        else {
-            this.setState({
-                current_player: "X",
+                currentPlayer: "O",
                 message: "Player two,"
             })
             return "X"
+        } 
+        else {
+            this.setState({
+                currentPlayer: "X",
+                message: "Player one,"
+            })
+            return "O"
         }
             
     }
@@ -43,11 +53,11 @@ class Board extends Component {
         this.setState({error: " "});
     }
 
-    selectSquare(position_number) {
+    selectSquare(positionNumber) {
         const moves = this.state.moves.slice();
         
-        if (moves[position_number] == null) {
-            moves[position_number] = this.getCurrentPlayer();
+        if (moves[positionNumber] == null) {
+            moves[positionNumber] = this.getCurrentPlayer();
                 this.setState({
                     moves: moves
                 });
@@ -68,12 +78,12 @@ class Board extends Component {
         });
     }
 
-    renderSquare(position_number) {
+    renderSquare(positionNumber) {
         
         return (
           <Square
-            onClick={() => this.selectSquare(position_number)}
-            value={this.state.moves[position_number] || "-"}
+            onClick={() => this.selectSquare(positionNumber)}
+            value={this.state.moves[positionNumber] || "-"}
           />
         );
     }
