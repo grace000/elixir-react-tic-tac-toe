@@ -14,7 +14,7 @@ defmodule TicTacToeWeb.BoardController do
         |> text(body)
     end
     
-    def post_move(connection, _params) do
+    def send_board_update_response(connection, _params) do
         connection  
         |> put_status(:ok)
         |> send_resp(200, "ok")
@@ -27,6 +27,6 @@ defmodule TicTacToeWeb.BoardController do
 
     def create_move(connection, _params) do
         fetch_board_update_request(connection)
-        post_move(connection, _params)
+        send_board_update_response(connection, _params)
     end
 end

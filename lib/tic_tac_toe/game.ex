@@ -13,11 +13,7 @@ defmodule TicTacToe.Game do
               board: Board.empty_board}
     end
 
-    def make_move(game = setup_new_game, position) do
-        %{ game | board: Board.update(game.board, position, game.current_player)}
-    end
-
-    def make_move(game, position, next_player) do
-        %{ game | board: Board.update(game.board, position, next_player)}
+    def make_move(game, position, player) do
+        %{ game | board: Board.update(game.board, position, player)}
     end
 end

@@ -55,13 +55,10 @@ class Board extends Component {
 
     selectSquare(positionNumber) {
         const moves = this.state.moves.slice();
-        
+        console.log(moves)
         if (moves[positionNumber] == null) {
             moves[positionNumber] = this.getCurrentPlayer();
-                this.setState({
-                    moves: moves
-                });
-                this.postNewMark();
+            this.postNewMark(positionNumber);
         }
         else {
             this.setState({error: "Oh no, select an empty space!"});
@@ -69,11 +66,16 @@ class Board extends Component {
         }
     }
 
-    postNewMark() {
+    postNewMark(requestedMove) {
         axios.post('/api/createmove', {
             headers: {"Content-Type": "application/json"},
             data: {
-                moves: this.state.moves
+                board: {
+                    moves: this.state.moves
+                },
+                gameStatus: this.state.gameStatus,
+                currentPlayer: this.state.currentPlayer,
+                incomingMove: requestedMove
             }
         });
     }

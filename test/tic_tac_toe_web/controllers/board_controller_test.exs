@@ -3,7 +3,7 @@ defmodule TicTacToeWeb.BoardControllerTest do
 
     alias TicTacToeWeb.BoardController, as: Controller
     
-    describe "post_move" do
+    describe "send_board_update_response" do
         test " it receives connection and returns ok response", %{conn: conn} do
             conn = build_conn(:post, "/api/createmove", %{"moves" => [nil, nil, nil, nil, nil, nil, nil, nil, nil]})
             
