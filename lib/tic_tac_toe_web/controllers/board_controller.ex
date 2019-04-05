@@ -1,7 +1,6 @@
 defmodule TicTacToeWeb.BoardController do
     use TicTacToeWeb, :controller
     
-    # alias TicTacToe.Board, as: Board
     alias TicTacToe.Game, as: Game
 
     def new_game(conn, _params) do
@@ -38,6 +37,8 @@ defmodule TicTacToeWeb.BoardController do
 
     def create_move(connection, _params) do
         fetch_board_update_request(connection)
+            |> json_to_map
+            |> Game.make_move
         send_board_update_response(connection, _params)
     end
 
