@@ -70,9 +70,7 @@ class Board extends Component {
         axios.post('/api/createmove', {
             headers: {"Content-Type": "application/json"},
             data: {
-                board: {
-                    moves: this.state.moves
-                },
+                board: this.state.moves,
                 gameStatus: this.state.gameStatus,
                 currentPlayer: this.state.currentPlayer,
                 incomingMove: requestedMove

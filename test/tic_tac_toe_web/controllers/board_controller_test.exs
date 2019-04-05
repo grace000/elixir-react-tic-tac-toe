@@ -23,4 +23,22 @@ defmodule TicTacToeWeb.BoardControllerTest do
             assert  Controller.fetch_board_update_request(conn) == {:ok, %{"moves" => [nil, nil, nil, "X", nil, nil, nil, nil, nil]}}
         end
     end
+
+    describe "json_to_map" do
+        test " conversts incoming json to map" do
+            data = {:ok,
+            %{
+              "board" => [],
+              "currentPlayer" => "O",
+              "gameStatus" => "in progress",
+              "incomingMove" => 2
+            }}
+
+            assert Controller.json_to_map(data) == %{board: [],
+                                                    current_player: "O",
+                                                    game_status: "in progress",
+                                                    incoming_move: 2}
+        end
+        
+    end
 end

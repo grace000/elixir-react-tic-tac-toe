@@ -25,8 +25,23 @@ defmodule TicTacToeWeb.BoardController do
         Map.fetch(response, "data")
     end
 
+    def json_to_map(contents) do
+        case (contents) do
+            {:ok, data} -> %{
+                board: data["board"],
+                current_player: data["currentPlayer"],
+                game_status: data["gameStatus"],
+                incoming_move: data["incomingMove"]
+            }
+        end
+    end
+
     def create_move(connection, _params) do
         fetch_board_update_request(connection)
         send_board_update_response(connection, _params)
     end
+
+   
+
+
 end
