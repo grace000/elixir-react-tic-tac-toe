@@ -16,7 +16,7 @@ class Board extends Component {
     }
 
     componentDidMount() {
-        axios.get('/newgame')
+        axios.get('/new_game')
         .then((response) => {
             let data = response.data;
             let boardData = data.board;
@@ -31,23 +31,6 @@ class Board extends Component {
         }).catch(error => console.log(error))
     }
 
-    getCurrentPlayer() {
-        if (this.state.currentPlayer == "X") {
-            this.setState({
-                currentPlayer: "O",
-                message: "Player two,"
-            })
-            return "X"
-        } else {
-            this.setState({
-                currentPlayer: "X",
-                message: "Player one,"
-            })
-            return "O"
-        }
-            
-    }
-
     removeErrorMessage() {
         this.setState({error: " "});
     }
@@ -55,7 +38,7 @@ class Board extends Component {
     selectSquare(positionNumber) {
         const moves = this.state.moves.slice();
         if (moves[positionNumber] == null) {
-            moves[positionNumber] = this.getCurrentPlayer();
+            moves[positionNumber] = this.state.currentPlayer;
             this.postNewMark(positionNumber);
         } else {
             this.setState({error: "Oh no, select an empty space!"});
@@ -64,7 +47,7 @@ class Board extends Component {
     }
 
     postNewMark(requestedMove) {
-        axios.post('/api/createmove', {
+        axios.post('/api/create_move', {
             headers: {"Content-Type": "application/json"},
             data: {
                 board: this.state.moves,

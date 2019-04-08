@@ -1,4 +1,4 @@
-defmodule TicTacToeWeb.BoardController do
+defmodule TicTacToeWeb.GameController do
     use TicTacToeWeb, :controller
     
     alias TicTacToe.Game, as: Game

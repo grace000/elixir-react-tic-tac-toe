@@ -1,7 +1,7 @@
-defmodule TicTacToeWeb.BoardControllerTest do
+defmodule TicTacToeWeb.GameControllerTest do
     use TicTacToeWeb.ConnCase
 
-    alias TicTacToeWeb.BoardController, as: Controller
+    alias TicTacToeWeb.GameController, as: Controller
     
     describe "send_board_update_response" do
         test " it receives connection and returns ok response", %{conn: conn} do
