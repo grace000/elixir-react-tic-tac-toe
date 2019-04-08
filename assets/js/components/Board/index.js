@@ -38,8 +38,7 @@ class Board extends Component {
                 message: "Player two,"
             })
             return "X"
-        } 
-        else {
+        } else {
             this.setState({
                 currentPlayer: "X",
                 message: "Player one,"
@@ -58,8 +57,7 @@ class Board extends Component {
         if (moves[positionNumber] == null) {
             moves[positionNumber] = this.getCurrentPlayer();
             this.postNewMark(positionNumber);
-        }
-        else {
+        } else {
             this.setState({error: "Oh no, select an empty space!"});
             setTimeout(()=> this.removeErrorMessage(), 1000);
         }
@@ -100,7 +98,7 @@ class Board extends Component {
     render() {
         return (
             <div>
-                <section className="message-box">
+                <section>
                     <Message message={this.state.message} error={this.state.error}/>
                 </section>
                 <div className="board-row">

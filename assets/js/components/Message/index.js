@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const Message = (props) => (
-    <div>
+    <div className="message-box">
         <p>
             {props.message} please select a spot on the board!
         </p>
