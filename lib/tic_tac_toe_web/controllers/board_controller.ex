@@ -24,10 +24,15 @@ defmodule TicTacToeWeb.BoardController do
         Map.fetch(response, "data")
     end
 
+    def list_to_map(list) do
+        Stream.zip(Stream.iterate(0, &(&1+1)), list) 
+            |> Enum.into(%{})
+    end
+
     def json_to_map(contents) do
         case (contents) do
             {:ok, data} -> %{
-                board: data["board"],
+                board: list_to_map(data["board"]),
                 current_player: data["currentPlayer"],
                 game_status: data["gameStatus"],
                 incoming_move: data["incomingMove"]
@@ -41,6 +46,7 @@ defmodule TicTacToeWeb.BoardController do
             |> Game.make_move
         send_board_update_response(connection, _params)
     end
+
 
    
 
