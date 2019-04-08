@@ -55,7 +55,6 @@ class Board extends Component {
 
     selectSquare(positionNumber) {
         const moves = this.state.moves.slice();
-        console.log(moves)
         if (moves[positionNumber] == null) {
             moves[positionNumber] = this.getCurrentPlayer();
             this.postNewMark(positionNumber);
