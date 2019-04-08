@@ -75,7 +75,17 @@ class Board extends Component {
                 currentPlayer: this.state.currentPlayer,
                 incomingMove: requestedMove
             }
-        });
+        })
+        .then((response) => {
+            let data = response.data;
+            let boardData = data.board;
+            let gameStatus = data.game_status;
+            let reduceBoard = Object.values(boardData)
+            this.setState({
+                gameStatus: gameStatus,
+                moves: reduceBoard
+            })
+        }).catch(error => console.log(error));
     }
 
     renderSquare(positionNumber) {

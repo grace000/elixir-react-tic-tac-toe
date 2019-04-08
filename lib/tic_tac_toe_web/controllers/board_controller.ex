@@ -13,10 +13,12 @@ defmodule TicTacToeWeb.BoardController do
         |> text(body)
     end
     
-    def send_board_update_response(connection, _params) do
+    def send_board_update_response(updated_game, connection, _params) do
+        body = Jason.encode!(updated_game)
+
         connection  
-        |> put_status(:ok)
-        |> send_resp(200, "ok")
+        |> put_status(200)
+        |> text(body)
     end
 
     def fetch_board_update_request(connection) do
@@ -44,11 +46,7 @@ defmodule TicTacToeWeb.BoardController do
         fetch_board_update_request(connection)
             |> json_to_map
             |> Game.make_move
-        send_board_update_response(connection, _params)
+            |> send_board_update_response(connection, _params)
     end
-
-
-   
-
 
 end
