@@ -23,7 +23,7 @@ defmodule GameTest do
             
             assert Game.make_move(game) == %{
                                             game_status: "in progress", 
-                                            current_player: "X", 
+                                            current_player: "O", 
                                             incoming_move: 1,
                                             board: %{1 => "X"}
                                             }
@@ -48,7 +48,7 @@ defmodule GameTest do
             
             assert  Game.make_move(second_game_updated) == %{
                                                             game_status: "in progress", 
-                                                            current_player: "O",
+                                                            current_player: "X",
                                                             incoming_move: 3, 
                                                             board: %{1 => "X", 3 => "O"}
                                                             }

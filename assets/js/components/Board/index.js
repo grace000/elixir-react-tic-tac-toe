@@ -65,7 +65,8 @@ class Board extends Component {
             this.setState({
                 gameStatus: gameStatus,
                 moves: reduceBoard,
-                currentPlayer: currentPlayer
+                currentPlayer: currentPlayer,
+                message: currentPlayer == "X" ? "Player one," : "Player two," 
             })
         }).catch(error => console.log(error));
     }
