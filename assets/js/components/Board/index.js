@@ -8,7 +8,7 @@ class Board extends Component {
         super(props)
         this.state = {
             gameStatus: "",
-            moves: [],
+            moves: {},
             currentPlayer: "",
             message: "Player one,",
             error: ""
@@ -22,10 +22,9 @@ class Board extends Component {
             let boardData = data.board;
             let currentPlayer = data.current_player;
             let gameStatus = data.game_status;
-            let reduceBoard = Object.values(boardData)
             this.setState({
                 gameStatus: gameStatus,
-                moves: reduceBoard,
+                moves: Object.assign(this.state.moves, boardData),
                 currentPlayer: currentPlayer,
             })
         }).catch(error => console.log(error))
@@ -36,7 +35,9 @@ class Board extends Component {
     }
 
     selectSquare(positionNumber) {
-        const moves = this.state.moves.slice();
+        // const moves = this.state.moves.slice();
+        const moves = this.state.moves;
+
         if (moves[positionNumber] == null) {
             moves[positionNumber] = this.state.currentPlayer;
             this.postNewMark(positionNumber);
@@ -61,10 +62,9 @@ class Board extends Component {
             let boardData = data.board;
             let gameStatus = data.game_status;
             let currentPlayer = data.current_player;
-            let reduceBoard = Object.values(boardData)
             this.setState({
                 gameStatus: gameStatus,
-                moves: reduceBoard,
+                moves: Object.assign(this.state.moves, boardData),
                 currentPlayer: currentPlayer,
                 message: currentPlayer == "X" ? "Player one," : "Player two," 
             })

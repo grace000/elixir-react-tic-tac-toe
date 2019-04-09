@@ -24,40 +24,43 @@ defmodule TicTacToeWeb.GameControllerTest do
         end
     end
 
-    describe "list_to_map" do
-        test " returns empty map" do
-            board = []
-
-            assert Controller.list_to_map(board) == %{}
-        end
-
-        test " returns map with one item" do
-            board = ["X"]
-
-            assert Controller.list_to_map(board) == %{0 => "X"}
-        end
-
-        test " returns map with two items" do
-            board = ["X", "O"]
-
-            assert Controller.list_to_map(board) == %{0 => "X", 1 => "O"}
-        end
-    end
-
     describe "json_to_map" do
-        test " converts incoming json to map" do
-            data = {:ok,
-            %{
-              "board" => [],
-              "currentPlayer" => "O",
-              "gameStatus" => "in progress",
-              "incomingMove" => 2
-            }}
+        test " converts incoming json with no board moves to map" do
+            data = {
+                :ok,
+                %{
+                  "board" => %{},
+                  "currentPlayer" => "O",
+                  "gameStatus" => "in progress",
+                  "incomingMove" => 2
+                }
+            }
 
-            assert Controller.json_to_map(data) == %{board: %{},
+            assert Controller.json_to_map(data) == %{
+                                                    board: %{},
                                                     current_player: "O",
                                                     game_status: "in progress",
-                                                    incoming_move: 2}
+                                                    incoming_move: 2
+                                                   }
+        end
+
+        test " converts incoming json with two board moves map" do
+            data = {
+                :ok,
+                %{
+                  "board" => %{1 => "X", 5 => "O"},
+                  "currentPlayer" => "X",
+                  "gameStatus" => "in progress",
+                  "incomingMove" => 2
+                }
+            }
+
+            assert Controller.json_to_map(data) == %{
+                                                    board: %{1 => "X", 5 => "O"},
+                                                    current_player: "X",
+                                                    game_status: "in progress",
+                                                    incoming_move: 2
+                                                   }
         end
     end
 end

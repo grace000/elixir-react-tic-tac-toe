@@ -9,7 +9,7 @@ defmodule GameTest do
                                         current_player: "X", 
                                         incoming_move: nil,
                                         board: Board.empty_board
-                                        }
+                                       }
     end
     
     describe "updating board in game struct: " do
