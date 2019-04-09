@@ -34,7 +34,7 @@ componentDidMount() {
 selectSquare(positionNumber) {
     const moves = this.state.moves;
 
-    if (moves[positionNumber] == null) {
+    if (!moves[positionNumber]) {
         moves[positionNumber] = this.state.currentPlayer;
         this.postNewMark(positionNumber);
     } else {
