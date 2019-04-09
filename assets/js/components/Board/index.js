@@ -7,9 +7,9 @@ class Board extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            moves:{},
+            currentPlayer:"",
             gameStatus: "",
-            moves: {},
-            currentPlayer: "",
             message: "Player one,",
             error: ""
         }
@@ -30,14 +30,9 @@ class Board extends Component {
         }).catch(error => console.log(error))
     }
 
-    removeErrorMessage() {
-        this.setState({error: " "});
-    }
-
     selectSquare(positionNumber) {
-        // const moves = this.state.moves.slice();
         const moves = this.state.moves;
-
+    
         if (moves[positionNumber] == null) {
             moves[positionNumber] = this.state.currentPlayer;
             this.postNewMark(positionNumber);
@@ -46,7 +41,7 @@ class Board extends Component {
             setTimeout(()=> this.removeErrorMessage(), 1000);
         }
     }
-
+    
     postNewMark(requestedMove) {
         axios.post('/api/create_move', {
             headers: {"Content-Type": "application/json"},
@@ -56,8 +51,7 @@ class Board extends Component {
                 currentPlayer: this.state.currentPlayer,
                 incomingMove: requestedMove
             }
-        })
-        .then((response) => {
+        }).then((response) => {
             let data = response.data;
             let boardData = data.board;
             let gameStatus = data.game_status;
@@ -67,8 +61,12 @@ class Board extends Component {
                 moves: Object.assign(this.state.moves, boardData),
                 currentPlayer: currentPlayer,
                 message: currentPlayer == "X" ? "Player one," : "Player two," 
-            })
+            });
         }).catch(error => console.log(error));
+    }
+    
+    removeErrorMessage() {
+        this.setState({error: " "});
     }
 
     renderSquare(positionNumber) {
