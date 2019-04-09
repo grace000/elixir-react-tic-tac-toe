@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { shallow, mount } from 'enzyme'
-import HomePage from './index'
+import Game from './index'
 
 describe('HomePage Component', () => {
     it('renders', () => {
-        const wrapper = shallow(<HomePage />);
+        const wrapper = shallow(<Game />);
 
         expect(wrapper.exists()).toBe(true);
     });
