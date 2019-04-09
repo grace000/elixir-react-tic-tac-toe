@@ -60,10 +60,12 @@ class Board extends Component {
             let data = response.data;
             let boardData = data.board;
             let gameStatus = data.game_status;
+            let currentPlayer = data.current_player;
             let reduceBoard = Object.values(boardData)
             this.setState({
                 gameStatus: gameStatus,
-                moves: reduceBoard
+                moves: reduceBoard,
+                currentPlayer: currentPlayer
             })
         }).catch(error => console.log(error));
     }

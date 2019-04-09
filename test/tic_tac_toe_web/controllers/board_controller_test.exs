@@ -45,7 +45,7 @@ defmodule TicTacToeWeb.GameControllerTest do
     end
 
     describe "json_to_map" do
-        test " conversts incoming json to map" do
+        test " converts incoming json to map" do
             data = {:ok,
             %{
               "board" => [],

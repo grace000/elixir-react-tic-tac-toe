@@ -18,4 +18,8 @@ defmodule TicTacToe.Game do
     def make_move(game) do
         %{ game | board: Board.update(game.board, game.incoming_move, game.current_player)}
     end
+
+    def switch_player("X" = player_token), do: "O"
+
+    def switch_player("O" = player_token), do: "X"
 end
