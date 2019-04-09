@@ -9,6 +9,7 @@ defmodule TicTacToeWeb.GameController do
         body = Jason.encode!(game_in_map_form)
 
         connection
+        |> IO.inspect
         |> put_status(200)
         |> text(body)
     end

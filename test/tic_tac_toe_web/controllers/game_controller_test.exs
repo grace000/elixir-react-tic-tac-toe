@@ -3,6 +3,14 @@ defmodule TicTacToeWeb.GameControllerTest do
 
     alias TicTacToeWeb.GameController, as: Controller
     
+    describe "new_game" do
+        test " it returns empty game struct and ok response", %{conn: conn} do
+            conn = get(build_conn(), "/new_game")
+            
+            assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"in progress\",\"incoming_move\":null}"
+        end
+    end
+    
     describe "send_board_update_response" do
         test " it receives connection and returns ok response", %{conn: conn} do
             conn = build_conn(:post, "/api/createmove", %{"moves" => [nil, nil, nil, nil, nil, nil, nil, nil, nil]})
