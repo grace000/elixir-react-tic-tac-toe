@@ -82,7 +82,8 @@ removeErrorMessage() {
           <section>
             <Board 
               moves={this.state.moves}
-              selectSquare={(positionNumber) => this.selectSquare(positionNumber)}/>
+              selectSquare={(positionNumber) => this.selectSquare(positionNumber)}
+            />
           </section>
         </Main>
       </div>

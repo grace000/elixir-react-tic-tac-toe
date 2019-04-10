@@ -9,7 +9,6 @@ defmodule TicTacToeWeb.GameController do
         body = Jason.encode!(game_in_map_form)
 
         connection
-        |> IO.inspect
         |> put_status(200)
         |> text(body)
     end
@@ -24,8 +23,6 @@ defmodule TicTacToeWeb.GameController do
 
     def fetch_board_update_request(connection) do
         response = connection.body_params
-        IO.inspect(response)
-        IO.inspect("hello")
         Map.fetch(response, "data")
     end
 

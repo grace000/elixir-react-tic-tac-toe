@@ -27,7 +27,7 @@ defmodule TicTacToe.Game do
         }
     end
 
-    def switch_player("X" = player_token), do: "O"
+    def switch_player("X"), do: "O"
 
-    def switch_player("O" = player_token), do: "X"
+    def switch_player("O"), do: "X"
 end
