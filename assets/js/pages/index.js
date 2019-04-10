@@ -6,7 +6,7 @@ import axios from 'axios'
 
 class Game extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
         moves: {},
         currentPlayer:"",

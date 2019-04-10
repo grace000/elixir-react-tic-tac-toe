@@ -4,7 +4,8 @@
   "scripts": {
     "deploy": "webpack --mode production",
     "watch": "webpack --mode development --watch",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
@@ -47,7 +48,8 @@
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
       "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
     },
-    "setupFilesAfterEnv": ["<rootDir>/js/setupTests.js"
+    "setupFilesAfterEnv": [
+      "<rootDir>/js/setupTests.js"
     ]
   }
 }
