@@ -17,12 +17,12 @@ defmodule TicTacToeWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/boardstatus", BoardController, :board_status
+    get "/new_game", GameController, :new_game
   end
 
   # Other scopes may use custom stacks.
   scope "/api", TicTacToeWeb do
     pipe_through :api
-    post "/boardstatus", BoardController, :create_move
+    post "/create_move", GameController, :create_move
   end
 end
