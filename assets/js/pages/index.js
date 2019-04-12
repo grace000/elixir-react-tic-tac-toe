@@ -32,18 +32,11 @@ componentDidMount() {
 }
 
 selectSquare(positionNumber) {
-    const moves = this.state.moves;
-
-    if (!moves[positionNumber]) {
-        moves[positionNumber] = this.state.currentPlayer;
-        this.postNewMark(positionNumber);
-    } else {
-        this.setState({error: "Oh no, select an empty space!"});
-        setTimeout(()=> this.removeErrorMessage(), 1000);
-    }
+  this.postNewMark(positionNumber);
 }
 
 postNewMark(requestedMove) {
+  console.log("about to post a new mark", this.state.moves)
     axios.post('/api/create_move', {
         headers: {"Content-Type": "application/json"},
         data: {
@@ -53,17 +46,25 @@ postNewMark(requestedMove) {
             incomingMove: requestedMove
         }
     }).then((response) => {
-        let data = response.data;
-        let boardData = data.board;
-        let gameStatus = data.game_status;
-        let currentPlayer = data.current_player;
-        this.setState({
-            gameStatus: gameStatus,
-            moves: Object.assign(this.state.moves, boardData),
-            currentPlayer: currentPlayer,
-            message: currentPlayer == "X" ? "Player one," : "Player two," 
-        });
-    }).catch(error => console.log(error));
+      let data = response.data;
+      let boardData = data.board;
+      let gameStatus = data.game_status;
+      let currentPlayer = data.current_player;
+      this.setState({
+          gameStatus: gameStatus,
+          moves: Object.assign(this.state.moves, boardData),
+          currentPlayer: currentPlayer,
+          message: currentPlayer == "X" ? "Player one," : "Player two," 
+      });
+    }).catch(error => {
+      let errorCode = error.response.status;
+      let errorMessage = error.response.data;
+
+      if(errorCode == 400) {
+        this.setState({error: errorMessage});
+        setTimeout(()=> this.removeErrorMessage(), 1000);
+      }
+    })
 }
 
 removeErrorMessage() {

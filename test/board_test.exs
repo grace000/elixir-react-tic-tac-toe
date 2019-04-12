@@ -49,7 +49,7 @@ defmodule BoardTest do
             board_1 = Board.update(Board.empty_board, 0, :player_one)
             board_2 = Board.update(board_1, 1, :player_two)
         
-            assert board_2 = %{player_one: 0, player_two: 1}
+            assert board_2 = %{0 => :player_one, 1 => :player_two}
             assert Board.get_board_moves(board_2) == [0,1]
         end
     end
@@ -82,6 +82,28 @@ defmodule BoardTest do
                                                     :empty,
                                                     :empty,
                                                     :player_two]
+        end
+    end
+
+    describe "valid_move?" do
+        test "returns true if move is not already on the board" do
+            board_1 = %{0 => "X", 3 => "O", 6 => "X"}
+            board_2 = %{3 => "X", 4 => "O", 5 => "X"}
+            board_3 = %{6 => "X", 7 => "O"}
+
+            assert Board.valid_move?(board_1, 1) == true
+            assert Board.valid_move?(board_2, 2) == true
+            assert Board.valid_move?(board_3, 4) == true
+        end
+
+        test "returns false if move is already on the board" do
+            board_1 = %{0 => "X", 3 => "O", 6 => "X"}
+            board_2 = %{3 => "X", 4 => "O", 5 => "X"}
+            board_3 = %{6 => "X", 7 => "O"}
+
+            assert Board.valid_move?(board_1, 0) == false
+            assert Board.valid_move?(board_2, 3) == false
+            assert Board.valid_move?(board_3, 7) == false
         end
     end
   end

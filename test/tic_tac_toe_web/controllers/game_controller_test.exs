@@ -71,4 +71,36 @@ defmodule TicTacToeWeb.GameControllerTest do
                                                    }
         end
     end
+
+    describe "validate_move" do
+        test " returns ok when incoming move of 2 is valid" do
+            board = %{"1" => "X", "5" => "O"}
+            move = 2
+
+            assert Controller.validate_move(board, move) == {:ok, "Move is valid"}
+        end
+
+        test " returns ok when incoming move of 6 is valid" do
+            board = %{"1" => "X", "5" => "O"}
+            move = 6
+
+            assert Controller.validate_move(board, move) == {:ok, "Move is valid"}
+        end
+
+        test " returns error when incoming move is unavailable" do
+            board = %{"1" => "X", "5" => "O"}
+            move = 1
+
+            assert Controller.validate_move(board, move) == {:error, "Move is invalid"}
+        end
+    end
+
+    describe "handle_error" do
+        test " returns 400 when incoming move is not available", %{conn: conn} do
+            conn = build_conn(:post, "/api/createmove", "Oh no, that spot is already taken!")
+            call = Controller.handle_error(conn)
+            
+            assert call.resp_body == "Oh no, that spot is already taken!"
+        end
+    end
 end

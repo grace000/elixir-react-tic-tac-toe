@@ -8,10 +8,14 @@ defmodule TicTacToe.Board do
     end
 
     def get_board_moves(board) do
-        Enum.map(board, fn {_key, val} -> val end )
+        Enum.map(board, fn {key, _val} -> key end )
     end
 
     def current_marks(board) do
         Enum.map(0..8, fn x -> board[x] || :empty end)
+    end
+
+    def valid_move?(board, cell) do
+        Map.get(board, cell) == nil
     end
 end
