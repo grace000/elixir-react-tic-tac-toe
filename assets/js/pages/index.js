@@ -17,18 +17,18 @@ class Game extends Component {
 }
 
 componentDidMount() {
-    axios.get('/new_game')
-    .then((response) => {
-        let data = response.data;
-        let boardData = data.board;
-        let currentPlayer = data.current_player;
-        let gameStatus = data.game_status;
-        this.setState({
-            gameStatus: gameStatus,
-            moves: Object.assign(this.state.moves, boardData),
-            currentPlayer: currentPlayer,
-        })
-    }).catch(error => console.log(error))
+  axios.get('/new_game')
+  .then((response) => {
+      let data = response.data;
+      let boardData = data.board;
+      let currentPlayer = data.current_player;
+      let gameStatus = data.game_status;
+      this.setState({
+          gameStatus: gameStatus,
+          moves: Object.assign(this.state.moves, boardData),
+          currentPlayer: currentPlayer,
+      })
+  }).catch(error => console.log(error))
 }
 
 selectSquare(positionNumber) {
@@ -36,34 +36,34 @@ selectSquare(positionNumber) {
 }
 
 postNewMark(requestedMove) {
-    axios.post('/api/create_move', {
-        headers: {"Content-Type": "application/json"},
-        data: {
-            board: this.state.moves,
-            gameStatus: this.state.gameStatus,
-            currentPlayer: this.state.currentPlayer,
-            incomingMove: requestedMove
-        }
-    }).then((response) => {
-      let data = response.data;
-      let boardData = data.board;
-      let gameStatus = data.game_status;
-      let currentPlayer = data.current_player;
-      this.setState({
-          gameStatus: gameStatus,
-          moves: Object.assign(this.state.moves, boardData),
-          currentPlayer: currentPlayer,
-          message: currentPlayer == "X" ? "Player one," : "Player two," 
-      });
-    }).catch(error => {
-      let errorCode = error.response.status;
-      let errorMessage = error.response.data;
-
-      if(errorCode == 400) {
-        this.setState({error: errorMessage});
-        setTimeout(()=> this.removeErrorMessage(), 1000);
+  axios.post('/api/create_move', {
+      headers: {"Content-Type": "application/json"},
+      data: {
+          board: this.state.moves,
+          gameStatus: this.state.gameStatus,
+          currentPlayer: this.state.currentPlayer,
+          incomingMove: requestedMove
       }
+  }).then((response) => {
+    let data = response.data;
+    let boardData = data.board;
+    let gameStatus = data.game_status;
+    let currentPlayer = data.current_player;
+    this.setState({
+        gameStatus: gameStatus,
+        moves: Object.assign(this.state.moves, boardData),
+        currentPlayer: currentPlayer,
+        message: currentPlayer == "X" ? "Player one," : "Player two," 
     });
+  }).catch(error => {
+    let errorCode = error.response.status;
+    let errorMessage = error.response.data;
+
+    if(errorCode == 400) {
+      this.setState({error: errorMessage});
+      setTimeout(()=> this.removeErrorMessage(), 1000);
+    }
+  });
 }
 
 removeErrorMessage() {

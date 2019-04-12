@@ -39,11 +39,10 @@ defmodule TicTacToeWeb.GameController do
     def validate_move(current_board, incoming_move) do
         parsed_move = to_string(incoming_move)
 
-        case (Board.valid_move?(current_board, parsed_move)) do
-            true -> 
-                {:ok, "Move is valid"}
-            false -> 
-                {:error, "Move is invalid"}
+        if (Board.valid_move?(current_board, parsed_move)) do
+            {:ok, "Move is valid"}
+        else
+            {:error, "Move is invalid"}
         end
     end
 
