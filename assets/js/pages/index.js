@@ -36,7 +36,6 @@ selectSquare(positionNumber) {
 }
 
 postNewMark(requestedMove) {
-  console.log("about to post a new mark", this.state.moves)
     axios.post('/api/create_move', {
         headers: {"Content-Type": "application/json"},
         data: {
@@ -64,7 +63,7 @@ postNewMark(requestedMove) {
         this.setState({error: errorMessage});
         setTimeout(()=> this.removeErrorMessage(), 1000);
       }
-    })
+    });
 }
 
 removeErrorMessage() {
