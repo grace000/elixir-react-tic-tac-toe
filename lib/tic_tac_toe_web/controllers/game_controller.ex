@@ -27,15 +27,13 @@ defmodule TicTacToeWeb.GameController do
         Map.fetch(response, "data")
     end
 
-    def json_to_map(contents) do
-        case (contents) do
-            {:ok, data} -> %{
-                board: data["board"],
-                current_player: data["currentPlayer"],
-                game_status: data["gameStatus"],
-                incoming_move: data["incomingMove"]
-            }
-        end
+    def json_to_map({:ok, data}) do
+        %{
+            board: data["board"],
+            current_player: data["currentPlayer"],
+            game_status: data["gameStatus"],
+            incoming_move: data["incomingMove"]
+        }
     end
 
     def validate_move(current_board, incoming_move) do
