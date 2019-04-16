@@ -58,22 +58,25 @@ defmodule BoardTest do
         test "returns list with single mark on the board and placeholder for 8 remaining spaces" do
             board = Board.update(Board.empty_board, 1, :player_one)
 
-            assert Board.current_marks(board) == [:empty,
-                                                    :player_one,
-                                                    :empty,
-                                                    :empty,
-                                                    :empty,
-                                                    :empty,
-                                                    :empty,
-                                                    :empty,
-                                                    :empty]
+            assert Board.current_marks(board) == [
+                                                  :empty,
+                                                  :player_one,
+                                                  :empty,
+                                                  :empty,
+                                                  :empty,
+                                                  :empty,
+                                                  :empty,
+                                                  :empty,
+                                                  :empty
+                                                 ]
         end
 
         test "returns list with single mark on the board and placeholder for 7 remaining spaces" do
             board_1 = Board.update(Board.empty_board, 1, :player_one)
             board_2 = Board.update(board_1, 8, :player_two)
 
-            assert Board.current_marks(board_2) == [:empty,
+            assert Board.current_marks(board_2) == [
+                                                    :empty,
                                                     :player_one,
                                                     :empty,
                                                     :empty,
@@ -81,7 +84,8 @@ defmodule BoardTest do
                                                     :empty,
                                                     :empty,
                                                     :empty,
-                                                    :player_two]
+                                                    :player_two
+                                                   ]
         end
     end
 
