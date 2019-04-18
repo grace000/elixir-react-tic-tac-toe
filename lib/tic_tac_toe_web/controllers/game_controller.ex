@@ -57,6 +57,7 @@ defmodule TicTacToeWeb.GameController do
         case validate_move(mapped_data.board, mapped_data.incoming_move) do
             {:ok, "Move is valid"} ->
                 Game.make_move(mapped_data)
+                |> Game.game_status
                 |> send_board_response(connection, _params)
             {:error, "Move is invalid"} -> 
                 handle_error(connection)

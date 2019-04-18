@@ -2,15 +2,6 @@ defmodule RulesTest do
     use ExUnit.Case
     alias TicTacToe.Rules, as: Rules
     alias TicTacToe.Board, as: Board
-
-    describe "in_progress?" do
-        test " it returns true if there are no marks on the board" do
-            board = Board.empty_board
-
-            assert Rules.in_progress?(board)
-        end
-
-    end
     
     describe "status" do
        test " it returns in progress if there are no marks on the board" do
@@ -134,5 +125,4 @@ defmodule RulesTest do
             assert Rules.status(board) == {"X", [2,5,8]}
         end
     end
-
 end

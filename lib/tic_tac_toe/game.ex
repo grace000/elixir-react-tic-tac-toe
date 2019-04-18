@@ -2,6 +2,7 @@ defmodule TicTacToe.Game do
     alias __MODULE__
 
     alias TicTacToe.Board, as: Board
+    alias TicTacToe.Rules, as: Rules
     
     defstruct [
         :game_status, 
@@ -30,4 +31,11 @@ defmodule TicTacToe.Game do
     def switch_player("X"), do: "O"
 
     def switch_player("O"), do: "X"
+
+    def game_status(game) do
+        %{
+            game |
+            game_status: Rules.status(game.board)
+        }
+    end
 end
