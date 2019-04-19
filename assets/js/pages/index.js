@@ -33,6 +33,7 @@ componentDidMount() {
 
 selectSquare(positionNumber) {
   this.postNewMark(positionNumber);
+  this.removeErrorMessage()
 }
 
 postNewMark(requestedMove) {
@@ -61,7 +62,6 @@ postNewMark(requestedMove) {
 
       if(errorCode == 400) {
         this.setState({error: errorMessage});
-        setTimeout(()=> this.removeErrorMessage(), 1000);
       }
     });
 }
