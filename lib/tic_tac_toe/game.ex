@@ -13,7 +13,7 @@ defmodule TicTacToe.Game do
 
     def setup_new_game do
        %Game{
-          game_status: "in progress", 
+          game_status: "", 
           current_player: "X",
           incoming_move: nil,
           board: Board.empty_board

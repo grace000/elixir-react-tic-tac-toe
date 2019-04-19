@@ -4,15 +4,15 @@ defmodule TicTacToeWeb.GameControllerTest do
     alias TicTacToeWeb.GameController, as: Controller
     
     describe "new_game" do
-        test " it returns empty game struct and ok response", %{conn: conn} do
+        test " it returns empty game struct and ok response", %{conn: _conn} do
             conn = get(build_conn(), "/new_game")
             
-            assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"in progress\",\"incoming_move\":null}"
+            assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"\",\"incoming_move\":null}"
         end
     end
     
     describe "send_board_update_response" do
-        test " it receives connection and returns ok response", %{conn: conn} do
+        test " it receives connection and returns ok response", %{conn: _conn} do
             conn = build_conn(:post, "/api/createmove", %{"moves" => [nil, nil, nil, nil, nil, nil, nil, nil, nil]})
             
             assert conn.params ==  %{"moves" => [nil, nil, nil, nil, nil, nil, nil, nil, nil]}
@@ -20,7 +20,7 @@ defmodule TicTacToeWeb.GameControllerTest do
     end
 
     describe "fetch_board_update_request" do
-        test " returns moves data from post method", %{conn: conn} do
+        test " returns moves data from post method", %{conn: _conn} do
             data = %{
                 "data" => %{"moves" => [nil, nil, nil, "X", nil, nil, nil, nil, nil]},
                 "headers" => %{"Content-Type" => "application/json"}
@@ -96,7 +96,7 @@ defmodule TicTacToeWeb.GameControllerTest do
     end
 
     describe "handle_error" do
-        test " returns 400 when incoming move is not available", %{conn: conn} do
+        test " returns 400 when incoming move is not available", %{conn: _conn} do
             conn = build_conn(:post, "/api/createmove", "Oh no, that spot is already taken!")
             call = Controller.handle_error(conn)
             

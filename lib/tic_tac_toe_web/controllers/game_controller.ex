@@ -58,6 +58,7 @@ defmodule TicTacToeWeb.GameController do
             {:ok, "Move is valid"} ->
                 Game.make_move(mapped_data)
                 |> Game.game_status
+                |> IO.inspect
                 |> send_board_response(connection, _params)
             {:error, "Move is invalid"} -> 
                 handle_error(connection)

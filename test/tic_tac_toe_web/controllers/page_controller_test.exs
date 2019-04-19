@@ -1,6 +1,5 @@
 defmodule TicTacToeWeb.PageControllerTest do
     use TicTacToeWeb.ConnCase
-    alias Plug.Test
 
     test "index renders index page", %{conn: conn} do
         conn = get conn, "/"
