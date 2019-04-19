@@ -24,4 +24,8 @@ defmodule TicTacToe.Board do
 
         !Enum.member?(state, :empty)
     end
+
+    def parse_board(data) do
+        for {k, v} <- data, into: %{}, do: {String.to_integer(k), v}
+    end
 end

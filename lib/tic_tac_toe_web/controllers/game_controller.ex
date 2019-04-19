@@ -21,7 +21,7 @@ defmodule TicTacToeWeb.GameController do
 
     def fetch_board_update_request(connection) do
         response = connection.body_params
-        Map.fetch(response, "data")
+        data = Map.fetch(response, "data")
     end
 
     def json_to_map({:ok, data}) do
@@ -53,12 +53,11 @@ defmodule TicTacToeWeb.GameController do
     def create_move(connection, _params) do
         data = fetch_board_update_request(connection)
         mapped_data = json_to_map(data)
-        
+
         case validate_move(mapped_data.board, mapped_data.incoming_move) do
             {:ok, "Move is valid"} ->
                 Game.make_move(mapped_data)
                 |> Game.game_status
-                |> IO.inspect
                 |> send_board_response(connection, _params)
             {:error, "Move is invalid"} -> 
                 handle_error(connection)

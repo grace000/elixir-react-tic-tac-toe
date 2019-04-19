@@ -4,9 +4,8 @@ defmodule TicTacToe.Rules do
     @players ["X", "O"]
     
     def status(board) do
-        board_marks = board
-        |> Board.current_marks()
-        
+        board_marks = Board.current_marks(board)
+
         cond do
             winner?(board_marks) -> :winner
             Enum.member?(board_marks, :empty) -> :in_progress

@@ -71,7 +71,7 @@ defmodule BoardTest do
                                                  ]
         end
 
-        test "returns list with single mark on the board and placeholder for 7 remaining spaces" do
+        test "returns list with two marks on the board and placeholder for 7 remaining spaces" do
             board_1 = Board.update(Board.empty_board, 1, :player_one)
             board_2 = Board.update(board_1, 8, :player_two)
 
@@ -81,6 +81,24 @@ defmodule BoardTest do
                                                     :empty,
                                                     :empty,
                                                     :empty,
+                                                    :empty,
+                                                    :empty,
+                                                    :empty,
+                                                    :player_two
+                                                   ]
+        end
+
+        test "returns list with three marks on the board and placeholder for 6 remaining spaces" do
+            board_1 = Board.update(Board.empty_board, 1, :player_one)
+            board_2 = Board.update(board_1, 8, :player_two)
+            board_3 = Board.update(board_2, 4, :player_one)
+
+            assert Board.current_marks(board_3) == [
+                                                    :empty,
+                                                    :player_one,
+                                                    :empty,
+                                                    :empty,
+                                                    :player_one,
                                                     :empty,
                                                     :empty,
                                                     :empty,

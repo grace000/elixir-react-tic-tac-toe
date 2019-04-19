@@ -23,7 +23,7 @@ defmodule TicTacToe.Game do
     def make_move(game) do
         %{ 
           game | 
-          board: Board.update(game.board, game.incoming_move, game.current_player),
+          board: Board.update(Board.parse_board(game.board), game.incoming_move, game.current_player),
           current_player: switch_player(game.current_player)
         }
     end
