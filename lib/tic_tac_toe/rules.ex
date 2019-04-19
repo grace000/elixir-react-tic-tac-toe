@@ -3,74 +3,74 @@ defmodule TicTacToe.Rules do
     
     @players ["X", "O"]
     
-    def status(board), do: board_state(Board.current_marks(board))
-
-    def winner?(current_marks) do
-        has_winning_row?(current_marks) || has_winning_column?(current_marks) || has_winning_diagonal?(current_marks)
+    def status(board) do
+        board_marks = board
+        |> Board.current_marks()
+        
+        cond do
+            winner?(board_marks) -> :winner
+            Enum.member?(board_marks, :empty) -> :in_progress
+            true -> :draw
+        end
     end
 
-    def winning_token?(board_marks) do
-        Enum.filter(board_marks, &match?([x,x,x] when x in @players, &1))
+    defp winner?(board_marks) do
+        has_winning_row?(board_marks) || has_winning_column?(board_marks) || has_winning_diagonal?(board_marks)
     end
 
-    def board_dimension(board) do
-        board
+    defp board_dimension(board_marks) do
+        board_marks
         |> Enum.count
         |> :math.sqrt
         |> Kernel.round
     end
     
-    defp rows(board) do
-        Enum.chunk_every(board, board_dimension(board))
+    defp rows(board_marks) do
+        Enum.chunk_every(board_marks, board_dimension(board_marks))
     end
 
-    defp columns(board) do
-        rows(board)
+    defp columns(board_marks) do
+        rows(board_marks)
         |> List.zip()
         |>Enum.map(&Tuple.to_list/1)
     end
 
-    defp has_winning_row?(board) do
-        rows(board)
+    defp has_winning_row?(board_marks) do
+        rows(board_marks)
         |> all_elements_in_list_equal?
     end
 
-    defp has_winning_column?(board) do
-        columns(board)
+    defp has_winning_column?(board_marks) do
+        columns(board_marks)
         |> all_elements_in_list_equal?
     end
 
-    defp has_winning_diagonal?(board) do
-        has_winning_left_diagonal?(board) || has_winning_right_diagonal?(board)
+    defp has_winning_diagonal?(board_marks) do
+        has_winning_left_diagonal?(board_marks) || has_winning_right_diagonal?(board_marks)
     end
 
-    defp has_winning_left_diagonal?(board) do
-        rows(board)
+    defp has_winning_left_diagonal?(board_marks) do
+        rows(board_marks)
         |> Enum.with_index()
         |> Enum.map(fn {row, index} -> Enum.at(row, index) end)
-        |> Enum.all?(fn _item -> Kernel.match?(_item, @players) end)
+        |> Enum.all?(fn _item -> Kernel.match?(_item, @players) && _item != :empty end)
     end
 
-    defp has_winning_right_diagonal?(board) do
-        rows(board)
+    defp has_winning_right_diagonal?(board_marks) do
+        rows(board_marks)
         |> Enum.reverse()
         |> Enum.with_index()
         |> Enum.map(fn {row, index} -> Enum.at(row, index) end)
-        |> Enum.all?(fn _item -> Kernel.match?(_item, @players) end)
-    end
-
-    defp match_against_winning_combos(list) do
-        Enum.filter(list, &match?([x,x,x] when x in @players, &1))
+        |> Enum.all?(fn _item -> Kernel.match?(_item, @players) && _item != :empty end)
     end
 
     defp all_elements_in_list_equal?(lists) do
-        Enum.any?(lists, fn list -> match_against_winning_combos(list) end)
-    end
-
-    defp board_state(board_marks) do
-        cond do
-            winner?(board_marks) -> winning_token?(board_marks)
-            Enum.member?(board_marks, :empty) -> "in progress" 
-        end
+        Enum.any?(lists, fn list -> 
+            if !Enum.member?(list, :empty) do
+                Enum.filter(list, &match?([x,x,x] when x in @players, &1))
+            else
+                false
+            end
+        end)
     end
 end

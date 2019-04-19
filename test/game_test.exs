@@ -69,42 +69,42 @@ defmodule GameTest do
         end
     end
 
-    describe "game_status" do
-        test " returns game map with updated game status" do
-            game = %{
-                game_status: "in progress", 
-                current_player: "X", 
-                incoming_move: 1,
-                board: %{}
-            }
+    # describe "game_status" do
+        # test " returns game map with updated game status" do
+        #     game = %{
+        #         game_status: "in progress", 
+        #         current_player: "X", 
+        #         incoming_move: 1,
+        #         board: %{}
+        #     }
         
-            updated_game = Game.make_move(game)
+        #     updated_game = Game.make_move(game)
             
-            second_game = %{
-                            game_status: "in progress", 
-                            current_player: "X", 
-                            incoming_move: 2,
-                            board: %{1 => "X"}
-                            }
+        #     second_game = %{
+        #                     game_status: "in progress", 
+        #                     current_player: "X", 
+        #                     incoming_move: 2,
+        #                     board: %{1 => "X"}
+        #                     }
                                     
-            second_update = Game.make_move(second_game)
+        #     second_update = Game.make_move(second_game)
             
-            third_game = %{
-                game_status: "in progress", 
-                current_player: "X",
-                incoming_move: 0, 
-                board: %{1 => "X", 2 => "X"}
-                }
+        #     third_game = %{
+        #         game_status: "in progress", 
+        #         current_player: "X",
+        #         incoming_move: 0, 
+        #         board: %{1 => "X", 2 => "X"}
+        #         }
             
-            third_update = Game.make_move(third_game)
+        #     third_update = Game.make_move(third_game)
 
-            assert third_update.board == %{1 => "X", 2 => "X", 0 => "X"}
-            assert Game.game_status(third_update) == %{
-                                                            game_status: {"X", [0, 1, 2]}, 
-                                                            current_player: "O",
-                                                            incoming_move: 0, 
-                                                            board: %{1 => "X", 2 => "X", 0 => "X"}
-                                                            }
-        end
-    end
+        #     assert third_update.board == %{1 => "X", 2 => "X", 0 => "X"}
+        #     assert Game.game_status(third_update) == %{
+        #                                                     game_status: {"X", [0, 1, 2]}, 
+        #                                                     current_player: "O",
+        #                                                     incoming_move: 0, 
+        #                                                     board: %{1 => "X", 2 => "X", 0 => "X"}
+        #                                                     }
+        # end
+    # end
 end
