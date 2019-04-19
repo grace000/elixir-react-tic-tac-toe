@@ -18,4 +18,10 @@ defmodule TicTacToe.Board do
     def valid_move?(board, cell) do
         Map.get(board, cell) == nil
     end
+
+    def full?(board) do
+        state = current_marks(board)
+
+        !Enum.member?(state, :empty)
+    end
 end

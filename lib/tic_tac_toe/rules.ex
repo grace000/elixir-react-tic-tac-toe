@@ -10,7 +10,7 @@ defmodule TicTacToe.Rules do
         cond do
             winner?(board_marks) -> :winner
             Enum.member?(board_marks, :empty) -> :in_progress
-            true -> :draw
+            Board.full?(board_marks) && winner?(board_marks) == false -> :draw
         end
     end
 
