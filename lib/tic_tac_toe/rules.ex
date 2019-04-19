@@ -64,13 +64,22 @@ defmodule TicTacToe.Rules do
         |> Enum.all?(fn _item -> Kernel.match?(_item, @players) && _item != :empty end)
     end
 
+    # defp all_elements_in_list_equal?(lists) do
+    #     Enum.any?(lists, fn list -> 
+    #         if !Enum.member?(list, :empty) do
+    #             Enum.filter(list, &match?([x,x,x] when x in @players, &1))
+    #             Enum.all?
+    #         else
+    #             false
+    #         end
+    #     end)
+    # end
+
     defp all_elements_in_list_equal?(lists) do
         Enum.any?(lists, fn list -> 
-            if !Enum.member?(list, :empty) do
-                Enum.filter(list, &match?([x,x,x] when x in @players, &1))
-            else
-                false
-            end
+            Enum.map(list, fn item -> item end)
+            |> Enum.all?(fn _item -> Kernel.match?(_item, @players) && _item != :empty end)
+            
         end)
     end
 end
