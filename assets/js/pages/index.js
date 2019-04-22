@@ -11,7 +11,7 @@ class Game extends Component {
         moves: {},
         currentPlayer:"",
         gameStatus: "",
-        message: "Player one,",
+        message: "Player one, please select a spot on the board!",
         error: ""
     }
 }
@@ -54,7 +54,7 @@ postNewMark(requestedMove) {
           gameStatus: gameStatus,
           moves: Object.assign(this.state.moves, boardData),
           currentPlayer: currentPlayer,
-          message: currentPlayer == "X" ? "Player one," : "Player two," 
+          message: currentPlayer == "X" ? "Player one, please select a spot on the board!" : "Player two, please select a spot on the board!" 
       });
     }).catch(error => {
       let errorCode = error.response.status;
@@ -64,6 +64,10 @@ postNewMark(requestedMove) {
         this.setState({error: errorMessage});
       }
     });
+}
+
+displayWinner() {
+  this.state.currentPlayer == "X" ? "O" : "X"
 }
 
 removeErrorMessage() {
@@ -76,8 +80,21 @@ removeErrorMessage() {
           <section className="phx-hero">
             <h1>Welcome to Tic Tac Toe!</h1>
           </section>
-          <section>
-            <Message message={this.state.message} error={this.state.error}/>
+          <section> 
+            { (this.state.gameStatus == "winner" || this.state.gameStatus == "draw") ? 
+              <Message 
+                message={""} 
+                error={""} 
+                status={this.state.gameStatus}
+                winner={this.displayWinner()} 
+                /> : 
+                <Message 
+                  message={this.state.message}
+                  error={this.state.error}
+                  status={""}
+                  
+                />
+              }
           </section>
           <section>
             <Board 

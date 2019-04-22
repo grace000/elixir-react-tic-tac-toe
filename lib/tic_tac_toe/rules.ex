@@ -1,8 +1,6 @@
 defmodule TicTacToe.Rules do
     alias TicTacToe.Board, as: Board
     
-    @players ["X", "O"]
-    
     def status(board) do
         board_marks = Board.current_marks(board)
 
@@ -24,7 +22,7 @@ defmodule TicTacToe.Rules do
         |> Kernel.round
     end
     
-    defp rows(board_marks) do
+    def rows(board_marks) do
         Enum.chunk_every(board_marks, board_dimension(board_marks))
     end
 
@@ -49,25 +47,30 @@ defmodule TicTacToe.Rules do
     end
 
     defp has_winning_left_diagonal?(board_marks) do
-        rows(board_marks)
-        |> Enum.with_index()
-        |> Enum.map(fn {row, index} -> Enum.at(row, index) end)
-        |> Enum.all?(fn _item -> Kernel.match?(_item, @players) && _item != :empty end)
+        diag_marks = board_marks
+        |> Enum.take_every(2)
+        |> Enum.take_every(2)
+
+        if diag_marks == ["X", "X", "X"] || diag_marks == ["O", "O", "O"] do
+            true
+        end
     end
 
     defp has_winning_right_diagonal?(board_marks) do
-        rows(board_marks)
-        |> Enum.reverse()
-        |> Enum.with_index()
-        |> Enum.map(fn {row, index} -> Enum.at(row, index) end)
-        |> Enum.all?(fn _item -> Kernel.match?(_item, @players) && _item != :empty end)
+        diag_marks = board_marks
+        |> Enum.slice(2..6)
+        |> Enum.take_every(2)
+
+        if diag_marks == ["X", "X", "X"] || diag_marks == ["O", "O", "O"] do
+            true
+        end
+
     end
 
 
-    defp all_elements_in_list_equal?(lists) do
-        Enum.any?(lists, fn list -> 
-            Enum.map(list, fn item -> item end)
-            |> Enum.all?(fn _item -> Kernel.match?(_item, @players) && _item != :empty end)
-        end)
+    def all_elements_in_list_equal?(lists) do
+        Enum.map(lists, fn list -> list end)
+        |> Enum.any?(fn x -> x == ["X", "X", "X"] || x == ["O", "O", "O"] end)
     end
+
 end
