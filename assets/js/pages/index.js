@@ -66,10 +66,6 @@ postNewMark(requestedMove) {
     });
 }
 
-displayWinner() {
-  this.state.currentPlayer == "X" ? "O" : "X"
-}
-
 removeErrorMessage() {
     this.setState({error: " "});
 }
@@ -86,7 +82,7 @@ removeErrorMessage() {
                 message={""} 
                 error={""} 
                 status={this.state.gameStatus}
-                winner={this.displayWinner()} 
+                winner={this.state.currentPlayer == "X" ? "O" : "X"} 
                 /> : 
                 <Message 
                   message={this.state.message}

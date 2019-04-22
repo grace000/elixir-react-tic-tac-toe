@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Status from './status'
 
 const Message = (props) => (
   <div className="message-box">
@@ -8,9 +9,10 @@ const Message = (props) => (
     <p>
       {props.error}
     </p>
-    <p>
-      {props.status}
-    </p>
+    <Status 
+      status={props.status}
+      winner={props.winner}
+    />
   </div>
 )
 
