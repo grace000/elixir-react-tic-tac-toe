@@ -58,7 +58,30 @@ defmodule TicTacToeWeb.GameController do
         |> text("Oh no, that spot is already taken!")
     end
 
+    # def create_move(connection, params) do
+    #     data = fetch_board_update_request(connection)
+    #     mapped_data = json_to_map(data)
+
+    #     case validate_move(mapped_data.board, mapped_data.incoming_move) do
+    #         {:ok, "Move is valid"} ->
+    #             Game.make_move(mapped_data)
+    #             |> Game.game_status
+    #             |> send_board_response(connection, params)
+    #         {:error, "Move is invalid"} -> 
+    #             handle_error(connection)
+    #     end
+    # end
+
     def create_move(connection, params) do
+        
+        case params["game_type"] do
+            "human_vs_human" ->
+                create_human_move(connection, params)
+        end
+        
+    end
+
+    def create_human_move(connection, params) do
         data = fetch_board_update_request(connection)
         mapped_data = json_to_map(data)
 
@@ -71,5 +94,4 @@ defmodule TicTacToeWeb.GameController do
                 handle_error(connection)
         end
     end
-
 end
