@@ -4,11 +4,18 @@ defmodule TicTacToeWeb.GameController do
     alias TicTacToe.Game, as: Game
     alias TicTacToe.Board, as: Board
 
-    def new_game(connection, _params) do
-        game = Game.setup_new_game
+    def new_game(connection, params) do
+        game = select_game(params)
         game_in_map_form = Map.from_struct(game)
-       
-        send_board_response(game_in_map_form, connection, _params)
+
+        send_board_response(game_in_map_form, connection, params)
+    end
+
+    def select_game(params) do
+        case params["game_type"] do
+            "human_vs_human" -> 
+                Game.setup_new_game(:human_vs_human)
+        end
     end
     
     def send_board_response(game, connection, _params) do
@@ -20,8 +27,8 @@ defmodule TicTacToeWeb.GameController do
     end
 
     def fetch_board_update_request(connection) do
-        response = connection.body_params
-        data = Map.fetch(response, "data")
+        connection.body_params
+        |> Map.fetch("data")
     end
 
     def json_to_map({:ok, data}) do
@@ -50,7 +57,7 @@ defmodule TicTacToeWeb.GameController do
         |> text("Oh no, that spot is already taken!")
     end
 
-    def create_move(connection, _params) do
+    def create_move(connection, params) do
         data = fetch_board_update_request(connection)
         mapped_data = json_to_map(data)
 
@@ -58,7 +65,7 @@ defmodule TicTacToeWeb.GameController do
             {:ok, "Move is valid"} ->
                 Game.make_move(mapped_data)
                 |> Game.game_status
-                |> send_board_response(connection, _params)
+                |> send_board_response(connection, params)
             {:error, "Move is invalid"} -> 
                 handle_error(connection)
         end

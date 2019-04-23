@@ -3,13 +3,18 @@ defmodule GameTest do
     alias TicTacToe.Game, as: Game
     alias TicTacToe.Board, as: Board
 
-    test "it returns starting game struct" do
-        assert Game.setup_new_game == %Game{
-                                        game_status: "", 
-                                        current_player: "X", 
-                                        incoming_move: nil,
-                                        board: Board.empty_board
-                                       }
+    describe "setup_new_game" do
+        test " it returns a new human vs human struct when starting a game" do
+            game_type = :human_vs_human
+
+            assert Game.setup_new_game(game_type) == %Game {
+                                                        game_type: :human_vs_human,
+                                                        game_status: "", 
+                                                        current_player: "X", 
+                                                        incoming_move: nil,
+                                                        board: Board.empty_board
+                                                    }
+        end
     end
     
     describe "updating board in game struct: " do

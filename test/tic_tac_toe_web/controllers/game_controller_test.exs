@@ -4,10 +4,10 @@ defmodule TicTacToeWeb.GameControllerTest do
     alias TicTacToeWeb.GameController, as: Controller
     
     describe "new_game" do
-        test " it returns empty game struct and ok response", %{conn: _conn} do
-            conn = get(build_conn(), "/new_game")
+        test " it returns empty human vs human game struct and ok response", %{conn: _conn} do
+            conn = get(build_conn(), "/new_game/human_vs_human")
             
-            assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"\",\"incoming_move\":null}"
+            assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"\",\"game_type\":\"human_vs_human\",\"incoming_move\":null}"
         end
     end
     

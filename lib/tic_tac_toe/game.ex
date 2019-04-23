@@ -8,18 +8,20 @@ defmodule TicTacToe.Game do
         :game_status, 
         :current_player,
         :incoming_move, 
-        :board
+        :board,
+        :game_type
     ]
 
-    def setup_new_game do
-       %Game{
-          game_status: "", 
-          current_player: "X",
-          incoming_move: nil,
-          board: Board.empty_board
+    def setup_new_game(game_type) do
+        %Game {
+            game_type: game_type,
+            game_status: "", 
+            current_player: "X", 
+            incoming_move: nil,
+            board: Board.empty_board
         }
     end
-
+    
     def make_move(game) do
         %{ 
           game | 
