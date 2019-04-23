@@ -9,6 +9,12 @@ defmodule TicTacToeWeb.GameControllerTest do
             
             assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"\",\"game_type\":\"human_vs_human\",\"incoming_move\":null}"
         end
+
+        test " it returns empty easy computer game struct and ok response", %{conn: _conn} do
+            conn = get(build_conn(), "/new_game/easy_computer")
+            
+            assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"\",\"game_type\":\"easy_computer\",\"incoming_move\":null}"
+        end
     end
     
     describe "send_board_update_response" do

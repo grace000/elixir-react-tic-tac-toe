@@ -5,17 +5,18 @@ defmodule TicTacToeWeb.GameController do
     alias TicTacToe.Board, as: Board
 
     def new_game(connection, params) do
-        game = select_game(params)
+        game = select_game(params["game_type"])
         game_in_map_form = Map.from_struct(game)
 
         send_board_response(game_in_map_form, connection, params)
     end
 
-    def select_game(params) do
-        case params["game_type"] do
-            "human_vs_human" -> 
-                Game.setup_new_game(:human_vs_human)
-        end
+    def select_game("human_vs_human") do 
+        Game.setup_new_game(:human_vs_human)
+    end
+
+    def select_game("easy_computer") do 
+        Game.setup_new_game(:easy_computer)
     end
     
     def send_board_response(game, connection, _params) do
