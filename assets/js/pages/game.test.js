@@ -1,7 +1,7 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { shallow, mount } from 'enzyme'
-import Game from './index'
+import Game from './game'
 import Main from '../components/Main'
 import Message from '../components/Message'
 import Board from '../components/Board'

@@ -17,7 +17,7 @@ defmodule TicTacToeWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/new_game", GameController, :new_game
+    get "/new_game", PageController, :index
     get "/new_game/:game_type", GameController, :new_game
   end
 

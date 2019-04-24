@@ -1,4 +1,3 @@
-import Main from '../components/Main';
 import Board from '../components/Board';
 import Message from '../components/Message';
 import React, { Component } from 'react';
@@ -17,8 +16,10 @@ class Game extends Component {
 }
 
 componentDidMount() {
-    axios.get('/new_game')
+  
+    axios.get('/new_game/' + this.props.location.state.message)
     .then((response) => {
+        console.log(response)
         let data = response.data;
         let boardData = data.board;
         let currentPlayer = data.current_player;
@@ -30,6 +31,8 @@ componentDidMount() {
         })
     }).catch(error => console.log(error))
 }
+
+
 
 selectSquare(positionNumber) {
   this.postNewMark(positionNumber);
@@ -72,33 +75,31 @@ removeErrorMessage() {
   render() {
     return (
       <div>
-        <Main>
-          <section className="phx-hero">
-            <h1>Welcome to Tic Tac Toe!</h1>
-          </section>
-          <section> 
-            { (this.state.gameStatus == "winner" || this.state.gameStatus == "draw") ? 
+        <section className="phx-hero">
+          <h1>Welcome to Tic Tac Toe!</h1>
+        </section>
+        <section> 
+          { (this.state.gameStatus == "winner" || this.state.gameStatus == "draw") ? 
+            <Message 
+              message={""} 
+              error={""} 
+              status={this.state.gameStatus}
+              winner={this.state.currentPlayer == "X" ? "O" : "X"} 
+              /> : 
               <Message 
-                message={""} 
-                error={""} 
-                status={this.state.gameStatus}
-                winner={this.state.currentPlayer == "X" ? "O" : "X"} 
-                /> : 
-                <Message 
-                  message={this.state.message}
-                  error={this.state.error}
-                  status={""}
-                  
-                />
-              }
-          </section>
-          <section>
-            <Board 
-              moves={this.state.moves}
-              selectSquare={(positionNumber) => this.selectSquare(positionNumber)}
-            />
-          </section>
-        </Main>
+                message={this.state.message}
+                error={this.state.error}
+                status={""}
+                
+              />
+            }
+        </section>
+        <section>
+          <Board 
+            moves={this.state.moves}
+            selectSquare={(positionNumber) => this.selectSquare(positionNumber)}
+          />
+        </section>
       </div>
     );
   }
