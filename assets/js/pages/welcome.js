@@ -7,6 +7,11 @@ class Welcome extends Component {
       super(props);
     }
 
+    removeUnderscores(string) {
+        const newString = string.replace(/_/g, " ");
+        return newString
+    }
+
     handleGameSelection(gameType) {
         this.props.history.push({pathname: '/new_game', state: {message: gameType}});
     }
@@ -16,7 +21,7 @@ class Welcome extends Component {
         return (
           <Square
             onClick={() => this.handleGameSelection(gameType)}
-            value={gameType}
+            value={this.removeUnderscores(gameType)}
           />
         );
     }

@@ -20,7 +20,6 @@ componentDidMount() {
   
     axios.get('/new_game/' + this.props.location.state.message)
     .then((response) => {
-        console.log(response)
         const data = response.data;
         const boardData = data.board;
         const currentPlayer = data.current_player;
@@ -92,8 +91,7 @@ removeErrorMessage() {
                 message={this.state.message}
                 error={this.state.error}
                 status={""}
-                
-              />
+              /> 
             }
         </section>
         <section>
