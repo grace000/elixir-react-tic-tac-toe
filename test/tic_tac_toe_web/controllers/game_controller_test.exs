@@ -44,12 +44,14 @@ defmodule TicTacToeWeb.GameControllerTest do
                 }
             }
 
-            assert Controller.json_to_map(data) == %{
-                                                    board: %{},
-                                                    current_player: "O",
-                                                    game_status: "in progress",
-                                                    incoming_move: 2
-                                                   }
+            mapped_data = %{
+                board: %{},
+                current_player: "O",
+                game_status: "in progress",
+                incoming_move: 2
+            }
+
+            assert Controller.json_to_map(data) == mapped_data
         end
 
         test " converts incoming json with two board moves map" do
@@ -63,12 +65,14 @@ defmodule TicTacToeWeb.GameControllerTest do
                 }
             }
 
-            assert Controller.json_to_map(data) == %{
-                                                    board: %{1 => "X", 5 => "O"},
-                                                    current_player: "X",
-                                                    game_status: "in progress",
-                                                    incoming_move: 2
-                                                   }
+            mapped_data = %{
+                board: %{1 => "X", 5 => "O"},
+                current_player: "X",
+                game_status: "in progress",
+                incoming_move: 2
+            }
+
+            assert Controller.json_to_map(data) == mapped_data
         end
     end
 
