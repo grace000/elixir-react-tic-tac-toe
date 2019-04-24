@@ -70,6 +70,11 @@ postNewMark(requestedMove) {
     });
 }
 
+removeUnderscores(string) {
+  const newString = string.replace(/_/g, " ");
+  return newString
+}
+
 removeErrorMessage() {
     this.setState({error: " "});
 }
@@ -77,7 +82,7 @@ removeErrorMessage() {
     return (
       <div>
         <section className="phx-hero">
-          <h1>Welcome to Tic Tac Toe!</h1>
+          <h1>{this.removeUnderscores(this.props.location.state.message)} game</h1>
         </section>
         <section> 
           { (this.state.gameStatus == "winner" || this.state.gameStatus == "draw") ? 
