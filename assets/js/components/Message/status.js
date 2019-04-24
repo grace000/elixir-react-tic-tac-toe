@@ -9,11 +9,11 @@ const Status = ({ status, winner }) => {
       );
     }
     if (status == "draw") {
-        return (
-            <div className="draw">
-              Draw Game!!
-            </div>
-        );
+      return (
+        <div className="draw">
+          Draw Game!!
+        </div>
+      );
     }
     else return null;
   };
