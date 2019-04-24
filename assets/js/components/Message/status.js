@@ -8,7 +8,7 @@ const Status = ({ status, winner }) => {
         </div>
       );
     }
-    if (status == "draw") {
+    else if (status == "draw") {
         return (
             <div className="draw">
               Draw Game!!

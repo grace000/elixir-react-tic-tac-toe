@@ -21,7 +21,7 @@ defmodule TicTacToeWeb.GameController do
 
     def fetch_board_update_request(connection) do
         response = connection.body_params
-        data = Map.fetch(response, "data")
+        |> Map.fetch("data")
     end
 
     def json_to_map({:ok, data}) do

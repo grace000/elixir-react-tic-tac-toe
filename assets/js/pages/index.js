@@ -28,12 +28,12 @@ componentDidMount() {
             moves: Object.assign(this.state.moves, boardData),
             currentPlayer: currentPlayer,
         })
-    }).catch(error => console.log(error))
+    }).catch(error => console.log(error));
 }
 
 selectSquare(positionNumber) {
   this.postNewMark(positionNumber);
-  this.removeErrorMessage()
+  this.removeErrorMessage();
 }
 
 postNewMark(requestedMove) {

@@ -51,9 +51,8 @@ defmodule TicTacToe.Rules do
         |> Enum.take_every(2)
         |> Enum.take_every(2)
 
-        if diag_marks == ["X", "X", "X"] || diag_marks == ["O", "O", "O"] do
-            true
-        end
+        diag_marks == ["X", "X", "X"] || diag_marks == ["O", "O", "O"]
+       
     end
 
     defp has_winning_right_diagonal?(board_marks) do
@@ -61,9 +60,7 @@ defmodule TicTacToe.Rules do
         |> Enum.slice(2..6)
         |> Enum.take_every(2)
 
-        if diag_marks == ["X", "X", "X"] || diag_marks == ["O", "O", "O"] do
-            true
-        end
+        diag_marks == ["X", "X", "X"] || diag_marks == ["O", "O", "O"]
 
     end
 
