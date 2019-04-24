@@ -46,7 +46,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                   "board" => %{},
                   "currentPlayer" => "O",
                   "gameStatus" => "in progress",
-                  "incomingMove" => 2
+                  "incomingMove" => 2,
+                  "gameType" => "human_vs_human"
                 }
             }
 
@@ -54,7 +55,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                                                     board: %{},
                                                     current_player: "O",
                                                     game_status: "in progress",
-                                                    incoming_move: 2
+                                                    incoming_move: 2,
+                                                    game_type: "human_vs_human"
                                                    }
         end
 
@@ -65,7 +67,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                   "board" => %{1 => "X", 5 => "O"},
                   "currentPlayer" => "X",
                   "gameStatus" => "in progress",
-                  "incomingMove" => 2
+                  "incomingMove" => 2,
+                  "gameType" => "human_vs_human"
                 }
             }
 
@@ -73,7 +76,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                                                     board: %{1 => "X", 5 => "O"},
                                                     current_player: "X",
                                                     game_status: "in progress",
-                                                    incoming_move: 2
+                                                    incoming_move: 2,
+                                                    game_type: "human_vs_human"
                                                    }
         end
     end

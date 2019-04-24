@@ -1,6 +1,6 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Game from './game'
 import Main from '../components/Main'
 import Message from '../components/Message'

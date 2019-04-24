@@ -10,6 +10,7 @@ class Game extends Component {
         moves: {},
         currentPlayer:"",
         gameStatus: "",
+        gameType: "",
         message: "Player one, please select a spot on the board!",
         error: ""
     }
@@ -20,19 +21,19 @@ componentDidMount() {
     axios.get('/new_game/' + this.props.location.state.message)
     .then((response) => {
         console.log(response)
-        let data = response.data;
-        let boardData = data.board;
-        let currentPlayer = data.current_player;
-        let gameStatus = data.game_status;
+        const data = response.data;
+        const boardData = data.board;
+        const currentPlayer = data.current_player;
+        const gameStatus = data.game_status;
+        const gameType = data.game_type;
         this.setState({
             gameStatus: gameStatus,
             moves: Object.assign(this.state.moves, boardData),
             currentPlayer: currentPlayer,
+            gameType: gameType
         })
     }).catch(error => console.log(error))
 }
-
-
 
 selectSquare(positionNumber) {
   this.postNewMark(positionNumber);
@@ -46,13 +47,14 @@ postNewMark(requestedMove) {
             board: this.state.moves,
             gameStatus: this.state.gameStatus,
             currentPlayer: this.state.currentPlayer,
-            incomingMove: requestedMove
+            incomingMove: requestedMove,
+            gameType: this.state.gameType
         }
     }).then((response) => {
-      let data = response.data;
-      let boardData = data.board;
-      let gameStatus = data.game_status;
-      let currentPlayer = data.current_player;
+      const data = response.data;
+      const boardData = data.board;
+      const gameStatus = data.game_status;
+      const currentPlayer = data.current_player;
       this.setState({
           gameStatus: gameStatus,
           moves: Object.assign(this.state.moves, boardData),
@@ -60,8 +62,8 @@ postNewMark(requestedMove) {
           message: currentPlayer == "X" ? "Player one, please select a spot on the board!" : "Player two, please select a spot on the board!" 
       });
     }).catch(error => {
-      let errorCode = error.response.status;
-      let errorMessage = error.response.data;
+      const errorCode = error.response.status;
+      const errorMessage = error.response.data;
 
       if(errorCode == 400) {
         this.setState({error: errorMessage});

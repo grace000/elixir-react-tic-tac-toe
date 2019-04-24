@@ -2,6 +2,7 @@ defmodule GameTest do
     use ExUnit.Case
     alias TicTacToe.Game, as: Game
     alias TicTacToe.Board, as: Board
+    alias TicTacToe.EasyComputer, as: EasyComputer
 
     describe "setup_new_game" do
         test " it returns a new human vs human struct when starting a game" do
@@ -57,6 +58,25 @@ defmodule GameTest do
                                                             incoming_move: 3, 
                                                             board: %{1 => "X", 3 => "O"}
                                                             }
+        end
+
+        test " make_move allows easy computer to update game" do
+            game = %{
+                game_status: :in_progress, 
+                current_player: "O", 
+                incoming_move: 1,
+                board: %{"1" => "X"}
+            }
+            
+            board = Board.current_marks(game.board)
+            coordinate = EasyComputer.select_coordinate(board)
+
+            assert Game.make_move(game, :easy_computer) == %{
+                                            game_status: :in_progress, 
+                                            current_player: "X",
+                                            incoming_move: coordinate, 
+                                            board: %{1 => "X", coordinate => "O"}
+                                            }
         end
     end
 

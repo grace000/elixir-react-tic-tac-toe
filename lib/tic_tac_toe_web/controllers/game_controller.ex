@@ -37,7 +37,8 @@ defmodule TicTacToeWeb.GameController do
             board: data["board"],
             current_player: data["currentPlayer"],
             game_status: data["gameStatus"],
-            incoming_move: data["incomingMove"]
+            incoming_move: data["incomingMove"],
+            game_type: data["gameType"]
         }
     end
 
@@ -58,36 +59,43 @@ defmodule TicTacToeWeb.GameController do
         |> text("Oh no, that spot is already taken!")
     end
 
-    # def create_move(connection, params) do
-    #     data = fetch_board_update_request(connection)
-    #     mapped_data = json_to_map(data)
-
-    #     case validate_move(mapped_data.board, mapped_data.incoming_move) do
-    #         {:ok, "Move is valid"} ->
-    #             Game.make_move(mapped_data)
-    #             |> Game.game_status
-    #             |> send_board_response(connection, params)
-    #         {:error, "Move is invalid"} -> 
-    #             handle_error(connection)
-    #     end
-    # end
-
-    def create_move(connection, params) do
-        
-        case params["game_type"] do
-            "human_vs_human" ->
-                create_human_move(connection, params)
-        end
-        
+    def mapped_request(connection, _params) do
+        fetch_board_update_request(connection)
+        |> json_to_map
     end
 
-    def create_human_move(connection, params) do
-        data = fetch_board_update_request(connection)
-        mapped_data = json_to_map(data)
+    def create_move(connection, params) do
+        mapped_data = mapped_request(connection, params)
+
+        case mapped_data.game_type do
+            "human_vs_human" ->
+                create_human_move(connection, params)
+            "easy_computer" ->
+                create_computer_move(connection, params)
+        end
+    end
+
+    defp create_human_move(connection, params) do
+        mapped_data = mapped_request(connection, params)
 
         case validate_move(mapped_data.board, mapped_data.incoming_move) do
             {:ok, "Move is valid"} ->
                 Game.make_move(mapped_data)
+                |> Game.game_status
+                |> send_board_response(connection, params)
+            {:error, "Move is invalid"} -> 
+                handle_error(connection)
+        end
+    end
+
+    defp create_computer_move(connection, params) do
+        mapped_data = mapped_request(connection, params)
+
+        case validate_move(mapped_data.board, mapped_data.incoming_move) do
+            {:ok, "Move is valid"} ->
+                Game.make_move(mapped_data)
+                |> Game.game_status
+                |> Game.make_move(:easy_computer)
                 |> Game.game_status
                 |> send_board_response(connection, params)
             {:error, "Move is invalid"} -> 

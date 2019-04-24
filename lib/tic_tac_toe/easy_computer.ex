@@ -15,4 +15,5 @@ defmodule TicTacToe.EasyComputer do
 
         Enum.random(0..marks)
     end
+
 end

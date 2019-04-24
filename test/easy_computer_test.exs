@@ -31,7 +31,7 @@ defmodule EasyComputerTest do
                 :empty,
                 :empty
                ]
-        
+
         assert Ez_comp.select_coordinate(board_marks) != 1
         assert Ez_comp.select_coordinate(board_marks) != 3
         assert Ez_comp.select_coordinate(board_marks) != 5

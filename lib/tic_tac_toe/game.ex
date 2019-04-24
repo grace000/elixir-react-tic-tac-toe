@@ -3,7 +3,8 @@ defmodule TicTacToe.Game do
 
     alias TicTacToe.Board, as: Board
     alias TicTacToe.Rules, as: Rules
-    
+    alias TicTacToe.EasyComputer, as: EasyComputer
+
     defstruct [
         :game_status, 
         :current_player,
@@ -28,6 +29,14 @@ defmodule TicTacToe.Game do
           board: Board.update(Board.parse_board(game.board), game.incoming_move, game.current_player),
           current_player: switch_player(game.current_player)
         }
+    end
+
+    def make_move(game, :easy_computer) do
+        %{ 
+            game | 
+            board: Board.update(game.board, EasyComputer.select_coordinate(Board.current_marks(game.board)), game.current_player),
+            current_player: switch_player(game.current_player)
+          }
     end
 
     def switch_player("X"), do: "O"
