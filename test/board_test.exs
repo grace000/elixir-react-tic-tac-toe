@@ -15,17 +15,15 @@ defmodule BoardTest do
     
         test "two players can each mark the board" do
             board_1 = Board.update(Board.empty_board, 0, :player_one)
-            assert board_1 == %{0 => :player_one}
-    
             _board_2 = Board.update(board_1, 1, :player_two)
+            
             assert board_2 = %{0 => :player_one, 1 => :player_two}
         end
     
         test "single player can make multiple moves" do
             board_1 = Board.update(Board.empty_board, 0, :player_one)
-            assert board_1 == %{0 => :player_one}
-    
             _board_2 = Board.update(board_1, 1, :player_one)
+            
             assert board_2 = %{0 => :player_one, 1 => :player_one}
         end
     
@@ -129,23 +127,6 @@ defmodule BoardTest do
             assert Board.valid_move?(board_1, 0) == false
             assert Board.valid_move?(board_2, 3) == false
             assert Board.valid_move?(board_3, 7) == false
-        end
-    end
-
-    describe "full?" do
-        test "returns true when board does not have any empty marks" do
-            board = Board.empty_board
-            |> Board.update(0, "X")
-            |> Board.update(1, "O")
-            |> Board.update(2, "X")
-            |> Board.update(3, "X")
-            |> Board.update(4, "X")
-            |> Board.update(5, "O")
-            |> Board.update(6, "O")
-            |> Board.update(7, "X")
-            |> Board.update(8, "O")
-
-            assert Board.full?(board) == true
         end
     end
   end
