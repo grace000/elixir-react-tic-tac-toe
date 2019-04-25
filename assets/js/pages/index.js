@@ -71,6 +71,8 @@ removeErrorMessage() {
     this.setState({error: " "});
 }
   render() {
+    const {gameStatus, currentPlayer, message, error, moves} = this.state; 
+
     return (
       <div>
         <Main>
@@ -78,16 +80,16 @@ removeErrorMessage() {
             <h1>Welcome to Tic Tac Toe!</h1>
           </section>
           <section> 
-            { (this.state.gameStatus == "winner" || this.state.gameStatus == "draw") ? 
+            { (gameStatus == "winner" || gameStatus == "draw") ? 
               <Message 
                 message={""} 
                 error={""} 
-                status={this.state.gameStatus}
-                winner={this.state.currentPlayer == gameInfo.playerOne ? gameInfo.playerTwo : gameInfo.playerOne} 
+                status={gameStatus}
+                winner={currentPlayer == gameInfo.playerOne ? gameInfo.playerTwo : gameInfo.playerOne} 
                 /> : 
                 <Message 
-                  message={this.state.message}
-                  error={this.state.error}
+                  message={message}
+                  error={error}
                   status={""}
                   
                 />
@@ -95,7 +97,7 @@ removeErrorMessage() {
           </section>
           <section>
             <Board 
-              moves={this.state.moves}
+              moves={moves}
               selectSquare={(positionNumber) => this.selectSquare(positionNumber)}
             />
           </section>
