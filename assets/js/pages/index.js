@@ -72,6 +72,10 @@ class Game extends Component {
       this.setState({error: " "});
   } 
 
+  displayStatus(status) {
+    return status == "winner" || status == "draw";
+  }
+
   render() {
     const {gameStatus, currentPlayer, message, error, moves} = this.state; 
     
@@ -97,7 +101,7 @@ class Game extends Component {
             <h1>Welcome to Tic Tac Toe!</h1>
           </section>
           <section> 
-            { (gameStatus == "winner" || gameStatus == "draw") ? gameOver : gameInProgress}
+            { this.displayStatus(gameStatus) ? gameOver : gameInProgress}
           </section>
           <section>
             <Board 
