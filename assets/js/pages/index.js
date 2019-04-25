@@ -3,6 +3,7 @@ import Board from '../components/Board';
 import Message from '../components/Message';
 import React, { Component } from 'react';
 import axios from 'axios'
+import gameInfo from '../components/GameInfo';
 
 class Game extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Game extends Component {
         moves: {},
         currentPlayer:"",
         gameStatus: "",
-        message: "Player one, please select a spot on the board!",
+        message: gameInfo.takeTurnMessage.playerOne,
         error: ""
     }
 }
@@ -54,7 +55,7 @@ postNewMark(requestedMove) {
           gameStatus: gameStatus,
           moves: Object.assign(this.state.moves, boardData),
           currentPlayer: currentPlayer,
-          message: currentPlayer == "X" ? "Player one, please select a spot on the board!" : "Player two, please select a spot on the board!" 
+          message: currentPlayer == gameInfo.playerOne ? gameInfo.takeTurnMessage.playerOne : gameInfo.takeTurnMessage.playerTwo
       });
     }).catch(error => {
       let errorCode = error.response.status;
@@ -82,7 +83,7 @@ removeErrorMessage() {
                 message={""} 
                 error={""} 
                 status={this.state.gameStatus}
-                winner={this.state.currentPlayer == "X" ? "O" : "X"} 
+                winner={this.state.currentPlayer == gameInfo.playerOne ? gameInfo.playerTwo : gameInfo.playerOne} 
                 /> : 
                 <Message 
                   message={this.state.message}
