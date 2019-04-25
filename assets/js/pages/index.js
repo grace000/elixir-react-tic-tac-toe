@@ -15,63 +15,80 @@ class Game extends Component {
         message: gameInfo.takeTurnMessage.playerOne,
         error: ""
     }
-}
+  }
 
-componentDidMount() {
-    axios.get('/new_game')
-    .then((response) => {
+  componentDidMount() {
+      axios.get('/new_game')
+      .then((response) => {
+          let data = response.data;
+          let boardData = data.board;
+          let currentPlayer = data.current_player;
+          let gameStatus = data.game_status;
+          this.setState({
+              gameStatus: gameStatus,
+              moves: Object.assign(this.state.moves, boardData),
+              currentPlayer: currentPlayer,
+          })
+      }).catch(error => console.log(error));
+  }
+
+  selectSquare(positionNumber) {
+    this.postNewMark(positionNumber);
+    this.removeErrorMessage();
+  }
+
+  postNewMark(requestedMove) {
+      axios.post('/api/create_move', {
+          headers: {"Content-Type": "application/json"},
+          data: {
+              board: this.state.moves,
+              gameStatus: this.state.gameStatus,
+              currentPlayer: this.state.currentPlayer,
+              incomingMove: requestedMove
+          }
+      }).then((response) => {
         let data = response.data;
         let boardData = data.board;
-        let currentPlayer = data.current_player;
         let gameStatus = data.game_status;
+        let currentPlayer = data.current_player;
         this.setState({
             gameStatus: gameStatus,
             moves: Object.assign(this.state.moves, boardData),
             currentPlayer: currentPlayer,
-        })
-    }).catch(error => console.log(error));
-}
+            message: currentPlayer == gameInfo.playerOne ? gameInfo.takeTurnMessage.playerOne : gameInfo.takeTurnMessage.playerTwo
+        });
+      }).catch(error => {
+        let errorCode = error.response.status;
+        let errorMessage = error.response.data;
 
-selectSquare(positionNumber) {
-  this.postNewMark(positionNumber);
-  this.removeErrorMessage();
-}
-
-postNewMark(requestedMove) {
-    axios.post('/api/create_move', {
-        headers: {"Content-Type": "application/json"},
-        data: {
-            board: this.state.moves,
-            gameStatus: this.state.gameStatus,
-            currentPlayer: this.state.currentPlayer,
-            incomingMove: requestedMove
+        if(errorCode == 400) {
+          this.setState({error: errorMessage});
         }
-    }).then((response) => {
-      let data = response.data;
-      let boardData = data.board;
-      let gameStatus = data.game_status;
-      let currentPlayer = data.current_player;
-      this.setState({
-          gameStatus: gameStatus,
-          moves: Object.assign(this.state.moves, boardData),
-          currentPlayer: currentPlayer,
-          message: currentPlayer == gameInfo.playerOne ? gameInfo.takeTurnMessage.playerOne : gameInfo.takeTurnMessage.playerTwo
-      });
-    }).catch(error => {
-      let errorCode = error.response.status;
-      let errorMessage = error.response.data;
-
-      if(errorCode == 400) {
-        this.setState({error: errorMessage});
       }
-    });
-}
+    );
+  }
 
-removeErrorMessage() {
-    this.setState({error: " "});
-}
+  removeErrorMessage() {
+      this.setState({error: " "});
+  } 
+
   render() {
     const {gameStatus, currentPlayer, message, error, moves} = this.state; 
+    
+    const gameOver = 
+      <Message 
+        message={""} 
+        error={""} 
+        status={gameStatus}
+        winner={currentPlayer == gameInfo.playerOne ? gameInfo.playerTwo : gameInfo.playerOne} 
+      />
+    
+    const gameInProgress = 
+      <Message 
+        message={message}
+        error={error}
+        status={""}
+      />
 
     return (
       <div>
@@ -80,20 +97,7 @@ removeErrorMessage() {
             <h1>Welcome to Tic Tac Toe!</h1>
           </section>
           <section> 
-            { (gameStatus == "winner" || gameStatus == "draw") ? 
-              <Message 
-                message={""} 
-                error={""} 
-                status={gameStatus}
-                winner={currentPlayer == gameInfo.playerOne ? gameInfo.playerTwo : gameInfo.playerOne} 
-                /> : 
-                <Message 
-                  message={message}
-                  error={error}
-                  status={""}
-                  
-                />
-              }
+            { (gameStatus == "winner" || gameStatus == "draw") ? gameOver : gameInProgress}
           </section>
           <section>
             <Board 
