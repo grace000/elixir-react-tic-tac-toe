@@ -4,10 +4,16 @@ defmodule TicTacToeWeb.GameControllerTest do
     alias TicTacToeWeb.GameController, as: Controller
     
     describe "new_game" do
-        test " it returns empty game struct and ok response", %{conn: _conn} do
-            conn = get(build_conn(), "/new_game")
+        test " it returns empty human vs human game struct and ok response", %{conn: _conn} do
+            conn = get(build_conn(), "/new_game/human_vs_human")
             
-            assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"\",\"incoming_move\":null}"
+            assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"\",\"game_type\":\"human_vs_human\",\"incoming_move\":null}"
+        end
+
+        test " it returns empty easy computer game struct and ok response", %{conn: _conn} do
+            conn = get(build_conn(), "/new_game/easy_computer")
+            
+            assert conn.resp_body =~ "{\"board\":{},\"current_player\":\"X\",\"game_status\":\"\",\"game_type\":\"easy_computer\",\"incoming_move\":null}"
         end
     end
     
@@ -40,7 +46,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                   "board" => %{},
                   "currentPlayer" => "O",
                   "gameStatus" => "in progress",
-                  "incomingMove" => 2
+                  "incomingMove" => 2,
+                  "gameType" => "human_vs_human"
                 }
             }
 
@@ -48,7 +55,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                 board: %{},
                 current_player: "O",
                 game_status: "in progress",
-                incoming_move: 2
+                incoming_move: 2,
+                game_type: "human_vs_human"
             }
 
             assert Controller.json_to_map(data) == mapped_data
@@ -61,7 +69,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                   "board" => %{1 => "X", 5 => "O"},
                   "currentPlayer" => "X",
                   "gameStatus" => "in progress",
-                  "incomingMove" => 2
+                  "incomingMove" => 2,
+                  "gameType" => "human_vs_human"
                 }
             }
 
@@ -69,7 +78,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                 board: %{1 => "X", 5 => "O"},
                 current_player: "X",
                 game_status: "in progress",
-                incoming_move: 2
+                incoming_move: 2,
+                game_type: "human_vs_human"
             }
 
             assert Controller.json_to_map(data) == mapped_data
