@@ -111,23 +111,11 @@ removeErrorMessage() {
           <h1>{this.removeUnderscores(this.props.location.state.message)} game</h1>
         </section>
         <section> 
-          { (this.state.gameStatus == "winner" || this.state.gameStatus == "draw") ? 
-            <Message 
-              message={""} 
-              error={""} 
-              status={this.state.gameStatus}
-              winner={this.state.currentPlayer == "X" ? "O" : "X"} 
-              /> : 
-              <Message 
-                message={this.state.message}
-                error={this.state.error}
-                status={""}
-              /> 
-            }
+          { this.displayStatus(gameStatus) ? gameOver : gameInProgress }
         </section>
         <section>
           <Board 
-            moves={this.state.moves}
+            moves={moves}
             selectSquare={(positionNumber) => this.selectSquare(positionNumber)}
           />
         </section>
