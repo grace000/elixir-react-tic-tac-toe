@@ -4,15 +4,16 @@ defmodule GameTest do
     alias TicTacToe.Board, as: Board
     alias TicTacToe.EasyComputer, as: EasyComputer
 
-    test "it returns starting game struct" do
+    test "it returns starting game struct for a human vs human game" do
         game = %Game{
             game_status: "", 
             current_player: "X", 
             incoming_move: nil,
-            board: Board.empty_board
+            board: Board.empty_board,
+            game_type: "human_vs_human"
         }
         
-        assert Game.setup_new_game == game
+        assert Game.setup_new_game("human_vs_human") == game
     end
     
     describe "updating board in game struct: " do
@@ -59,25 +60,6 @@ defmodule GameTest do
             }
             
             assert  Game.make_move(second_game_updated) == second_game_after_move
-        end
-
-        test " make_move allows easy computer to update game" do
-            game = %{
-                game_status: :in_progress, 
-                current_player: "O", 
-                incoming_move: 1,
-                board: %{"1" => "X"}
-            }
-            
-            board = Board.current_marks(game.board)
-            coordinate = EasyComputer.select_coordinate(board)
-
-            assert Game.make_move(game, :easy_computer) == %{
-                                            game_status: :in_progress, 
-                                            current_player: "X",
-                                            incoming_move: coordinate, 
-                                            board: %{1 => "X", coordinate => "O"}
-                                            }
         end
     end
 

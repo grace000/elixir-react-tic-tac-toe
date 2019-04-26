@@ -55,7 +55,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                 board: %{},
                 current_player: "O",
                 game_status: "in progress",
-                incoming_move: 2
+                incoming_move: 2,
+                game_type: "human_vs_human"
             }
 
             assert Controller.json_to_map(data) == mapped_data
@@ -77,7 +78,8 @@ defmodule TicTacToeWeb.GameControllerTest do
                 board: %{1 => "X", 5 => "O"},
                 current_player: "X",
                 game_status: "in progress",
-                incoming_move: 2
+                incoming_move: 2,
+                game_type: "human_vs_human"
             }
 
             assert Controller.json_to_map(data) == mapped_data
