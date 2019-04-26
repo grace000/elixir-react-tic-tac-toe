@@ -32,11 +32,16 @@ defmodule TicTacToe.Game do
     end
 
     def make_move(game, :easy_computer) do
+        IO.inspect(game)
+        cond do
+            game.game_status == :in_progress -> 
         %{ 
             game | 
             board: Board.update(game.board, EasyComputer.select_coordinate(Board.current_marks(game.board)), game.current_player),
             current_player: switch_player(game.current_player)
           }
+          true -> game
+        end
     end
 
     def switch_player("X"), do: "O"
