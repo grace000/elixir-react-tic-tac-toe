@@ -34,26 +34,19 @@ class Game extends Component {
   }
 
   postNewMark(requestedMove) {
-    axios.post('/api/create_move', {
-        headers: {"Content-Type": "application/json"},
-        data: {
-            board: this.state.moves,
-            gameStatus: this.state.gameStatus,
-            currentPlayer: this.state.currentPlayer,
-            incomingMove: requestedMove,
-            gameType: this.state.gameType
-        }
-    }).then((response) => {
-      const data = response.data;
-      const boardData = data.board;
-      const gameStatus = data.game_status;
-      const currentPlayer = data.current_player;
-      this.setState({
-        gameStatus: gameStatus,
-        moves: Object.assign(this.state.moves, boardData),
-        currentPlayer: currentPlayer,
-        message: currentPlayer == gameInfo.playerOne ? gameInfo.takeTurnMessage.playerOne : gameInfo.takeTurnMessage.playerTwo
-      });
+    helpers.makeBoardMarkRequest(
+      this.state.moves, 
+      this.state.gameStatus, 
+      this.state.currentPlayer,
+      requestedMove,
+      this.state.gameType
+      ).then((response) => {
+        this.setState({
+          gameStatus: response.game_status,
+          moves: Object.assign(this.state.moves, response.board),
+          currentPlayer: response.current_player,
+          message: response.current_player == gameInfo.playerOne ? gameInfo.takeTurnMessage.playerOne : gameInfo.takeTurnMessage.playerTwo
+        });
     }).catch(error => {
       const errorCode = error.response.status;
       const errorMessage = error.response.data;
