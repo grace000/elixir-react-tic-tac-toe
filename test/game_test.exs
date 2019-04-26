@@ -2,16 +2,18 @@ defmodule GameTest do
     use ExUnit.Case
     alias TicTacToe.Game, as: Game
     alias TicTacToe.Board, as: Board
+    alias TicTacToe.EasyComputer, as: EasyComputer
 
-    test "it returns starting game struct" do
+    test "it returns starting game struct for a human vs human game" do
         game = %Game{
             game_status: "", 
             current_player: "X", 
             incoming_move: nil,
-            board: Board.empty_board
+            board: Board.empty_board,
+            game_type: "human_vs_human"
         }
         
-        assert Game.setup_new_game == game
+        assert Game.setup_new_game("human_vs_human") == game
     end
     
     describe "updating board in game struct: " do
