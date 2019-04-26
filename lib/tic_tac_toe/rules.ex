@@ -51,9 +51,7 @@ defmodule TicTacToe.Rules do
         |> Enum.take_every(2)
         |> Enum.take_every(2)
 
-        if diag_marks == ["X", "X", "X"] || diag_marks == ["O", "O", "O"] do
-            true
-        end
+        Enum.count(Enum.uniq(diag_marks)) == 1 && !Enum.member?(diag_marks, :empty)
     end
 
     defp has_winning_right_diagonal?(board_marks) do
@@ -61,16 +59,13 @@ defmodule TicTacToe.Rules do
         |> Enum.slice(2..6)
         |> Enum.take_every(2)
 
-        if diag_marks == ["X", "X", "X"] || diag_marks == ["O", "O", "O"] do
-            true
-        end
-
+        Enum.count(Enum.uniq(diag_marks)) == 1 && !Enum.member?(diag_marks, :empty)
     end
-
 
     def all_elements_in_list_equal?(lists) do
         Enum.map(lists, fn list -> list end)
-        |> Enum.any?(fn x -> x == ["X", "X", "X"] || x == ["O", "O", "O"] end)
+          |> Enum.any?(fn x -> 
+            Enum.count(Enum.uniq(x)) == 1 && !Enum.member?(x, :empty) end)
     end
 
 end

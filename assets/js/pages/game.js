@@ -2,19 +2,19 @@ import Board from '../components/Board';
 import Message from '../components/Message';
 import React, { Component } from 'react';
 import axios from 'axios'
+import gameInfo from '../components/GameInfo';
 
 class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        moves: {},
-        currentPlayer:"",
-        gameStatus: "",
-        gameType: "",
-        message: "Player one, please select a spot on the board!",
-        error: ""
+      moves: {},
+      currentPlayer: "",
+      gameStatus: "",
+      message: gameInfo.takeTurnMessage.playerOne,
+      error: ""
     }
-}
+  }
 
 componentDidMount() {
   
@@ -31,15 +31,15 @@ componentDidMount() {
             currentPlayer: currentPlayer,
             gameType: gameType
         })
-    }).catch(error => console.log(error))
-}
+      }).catch(error => console.log(error));
+  }
 
-selectSquare(positionNumber) {
-  this.postNewMark(positionNumber);
-  this.removeErrorMessage()
-}
+  selectSquare(positionNumber) {
+    this.postNewMark(positionNumber);
+    this.removeErrorMessage();
+  }
 
-postNewMark(requestedMove) {
+  postNewMark(requestedMove) {
     axios.post('/api/create_move', {
         headers: {"Content-Type": "application/json"},
         data: {
@@ -55,20 +55,29 @@ postNewMark(requestedMove) {
       const gameStatus = data.game_status;
       const currentPlayer = data.current_player;
       this.setState({
-          gameStatus: gameStatus,
-          moves: Object.assign(this.state.moves, boardData),
-          currentPlayer: currentPlayer,
-          message: currentPlayer == "X" ? "Player one, please select a spot on the board!" : "Player two, please select a spot on the board!" 
+        gameStatus: gameStatus,
+        moves: Object.assign(this.state.moves, boardData),
+        currentPlayer: currentPlayer,
+        message: currentPlayer == gameInfo.playerOne ? gameInfo.takeTurnMessage.playerOne : gameInfo.takeTurnMessage.playerTwo
       });
     }).catch(error => {
       const errorCode = error.response.status;
       const errorMessage = error.response.data;
 
-      if(errorCode == 400) {
-        this.setState({error: errorMessage});
+      if (errorCode == 400) {
+        this.setState({ error: errorMessage });
       }
-    });
-}
+    }
+    );
+  }
+
+  removeErrorMessage() {
+    this.setState({ error: " " });
+  }
+
+  displayStatus(status) {
+    return status == "winner" || status == "draw";
+  }
 
 removeUnderscores(string) {
   const newString = string.replace(/_/g, " ");
@@ -79,6 +88,23 @@ removeErrorMessage() {
     this.setState({error: " "});
 }
   render() {
+    const { gameStatus, currentPlayer, message, error, moves } = this.state;
+
+    const gameOver =
+      <Message
+        message={""}
+        error={""}
+        status={gameStatus}
+        winner={currentPlayer == gameInfo.playerOne ? gameInfo.playerTwo : gameInfo.playerOne}
+      />
+
+    const gameInProgress =
+      <Message
+        message={message}
+        error={error}
+        status={""}
+      />
+
     return (
       <div>
         <section className="phx-hero">
