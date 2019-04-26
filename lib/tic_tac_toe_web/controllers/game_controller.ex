@@ -7,15 +7,12 @@ defmodule TicTacToeWeb.GameController do
     def new_game(connection, _params) do
         game = Game.setup_new_game
         game_in_map_form = Map.from_struct(game)
-        body = Jason.encode!(game_in_map_form)
-
-        connection
-        |> put_status(200)
-        |> text(body)
+       
+        send_board_response(game_in_map_form, connection, _params)
     end
     
-    def send_board_update_response(updated_game, connection, _params) do
-        body = Jason.encode!(updated_game)
+    def send_board_response(game, connection, _params) do
+        body = Jason.encode!(game)
         
         connection  
         |> put_status(200)
@@ -24,7 +21,7 @@ defmodule TicTacToeWeb.GameController do
 
     def fetch_board_update_request(connection) do
         response = connection.body_params
-        Map.fetch(response, "data")
+        |> Map.fetch("data")
     end
 
     def json_to_map({:ok, data}) do
@@ -56,11 +53,12 @@ defmodule TicTacToeWeb.GameController do
     def create_move(connection, _params) do
         data = fetch_board_update_request(connection)
         mapped_data = json_to_map(data)
-        
+
         case validate_move(mapped_data.board, mapped_data.incoming_move) do
             {:ok, "Move is valid"} ->
                 Game.make_move(mapped_data)
-                |> send_board_update_response(connection, _params)
+                |> Game.game_status
+                |> send_board_response(connection, _params)
             {:error, "Move is invalid"} -> 
                 handle_error(connection)
         end

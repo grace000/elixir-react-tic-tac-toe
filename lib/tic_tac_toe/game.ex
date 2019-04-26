@@ -2,6 +2,7 @@ defmodule TicTacToe.Game do
     alias __MODULE__
 
     alias TicTacToe.Board, as: Board
+    alias TicTacToe.Rules, as: Rules
     
     defstruct [
         :game_status, 
@@ -12,7 +13,7 @@ defmodule TicTacToe.Game do
 
     def setup_new_game do
        %Game{
-          game_status: "in progress", 
+          game_status: "", 
           current_player: "X",
           incoming_move: nil,
           board: Board.empty_board
@@ -22,7 +23,7 @@ defmodule TicTacToe.Game do
     def make_move(game) do
         %{ 
           game | 
-          board: Board.update(game.board, game.incoming_move, game.current_player),
+          board: Board.update(Board.parse_board(game.board), game.incoming_move, game.current_player),
           current_player: switch_player(game.current_player)
         }
     end
@@ -30,4 +31,11 @@ defmodule TicTacToe.Game do
     def switch_player("X"), do: "O"
 
     def switch_player("O"), do: "X"
+
+    def game_status(game) do
+        %{
+            game |
+            game_status: Rules.status(game.board)
+        }
+    end
 end
