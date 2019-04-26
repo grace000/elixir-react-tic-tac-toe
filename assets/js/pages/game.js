@@ -29,8 +29,13 @@ class Game extends Component {
   }
 
   selectSquare(positionNumber) {
-    this.postNewMark(positionNumber);
-    this.removeErrorMessage();
+    switch(this.state.gameStatus) {
+      case "winner":
+        return;
+      default: 
+        this.postNewMark(positionNumber);
+        this.removeErrorMessage();
+    }
   }
 
   postNewMark(requestedMove) {
