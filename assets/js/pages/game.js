@@ -3,6 +3,7 @@ import Message from '../components/Message';
 import React, { Component } from 'react';
 import axios from 'axios'
 import gameInfo from '../components/GameInfo';
+import helpers from '../utils/helpers'
 
 class Game extends Component {
   constructor(props) {
@@ -16,22 +17,15 @@ class Game extends Component {
     }
   }
 
-componentDidMount() {
-  
-    axios.get('/new_game/' + this.props.location.state.message)
-    .then((response) => {
-        const data = response.data;
-        const boardData = data.board;
-        const currentPlayer = data.current_player;
-        const gameStatus = data.game_status;
-        const gameType = data.game_type;
-        this.setState({
-            gameStatus: gameStatus,
-            moves: Object.assign(this.state.moves, boardData),
-            currentPlayer: currentPlayer,
-            gameType: gameType
-        })
-      }).catch(error => console.log(error));
+  componentDidMount() {
+    helpers.startNewGame(this.props.location.state.message).then(data => {
+      this.setState({
+        gameStatus: data.game_status,
+        moves: Object.assign(this.state.moves, data.board),
+        currentPlayer: data.current_player,
+        gameType: data.game_type
+      })
+    })
   }
 
   selectSquare(positionNumber) {
@@ -67,8 +61,7 @@ componentDidMount() {
       if (errorCode == 400) {
         this.setState({ error: errorMessage });
       }
-    }
-    );
+    });
   }
 
   removeErrorMessage() {
@@ -79,14 +72,6 @@ componentDidMount() {
     return status == "winner" || status == "draw";
   }
 
-removeUnderscores(string) {
-  const newString = string.replace(/_/g, " ");
-  return newString
-}
-
-removeErrorMessage() {
-    this.setState({error: " "});
-}
   render() {
     const { gameStatus, currentPlayer, message, error, moves } = this.state;
 
@@ -108,7 +93,7 @@ removeErrorMessage() {
     return (
       <div>
         <section className="phx-hero">
-          <h1>{this.removeUnderscores(this.props.location.state.message)} game</h1>
+          <h1>{helpers.removeUnderscores(this.props.location.state.message)} game</h1>
         </section>
         <section> 
           { this.displayStatus(gameStatus) ? gameOver : gameInProgress }
