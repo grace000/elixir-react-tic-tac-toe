@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import Main from '../components/Main';
 import Square from '../components/Square';
+import helpers from '../utils/helpers'
 
 class Welcome extends Component {
     constructor(props) {
       super(props);
-    }
-
-    removeUnderscores(string) {
-        const newString = string.replace(/_/g, " ");
-        return newString
     }
 
     handleGameSelection(gameType) {
@@ -21,7 +17,7 @@ class Welcome extends Component {
         return (
           <Square
             onClick={() => this.handleGameSelection(gameType)}
-            value={this.removeUnderscores(gameType)}
+            value={helpers.removeUnderscores(gameType)}
           />
         );
     }
