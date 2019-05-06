@@ -62,22 +62,22 @@ defmodule HardComputerTest do
     end
 
     describe "select_coordinate" do
-        test " return 2" do
+        test " returns 2" do
             
             board = %{
                 0 => "X", 1 => "X", 
-                3 => "O", 4 => "O", 5 => "O",
-                6 => "X", 7 => "X", 8 => "O"
+                3 => "O", 4 => "X", 5 => "O",
+                6 => "X", 7 => "O", 8 => "O"
             }
 
             assert Hard_comp.select_coordinate(board) == 2
         end
 
-        test " return 0" do
+        test " returns 0" do
             
             board = %{
                           1 => "X", 2 => "X",  
-                3 => "O", 4 => "X", 5 => "O",
+                3 => "X", 4 => "O", 5 => "O",
                 6 => "X", 7 => "O", 8 => "O"
             }
 
