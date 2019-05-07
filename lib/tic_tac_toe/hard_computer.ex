@@ -4,20 +4,14 @@ defmodule TicTacToe.HardComputer do
     alias TicTacToe.Rules, as: Rules
 
     def select_coordinate(board) do
-        board_spaces = Board.current_marks(board)
-            
-        indexed_spaces = Enum.with_index(board_spaces)
-
-        empty_spaces = Enum.filter(indexed_spaces, fn {space, index} -> space == :empty end)
-            
-        scored = Enum.map(empty_spaces, fn {space, index} -> 
-            minimax(board, true)
-            index
+        scored_spaces = index_empty_spaces(board)
+        |> Enum.map(fn {_space, index} ->
+            {index, minimax(board, true)}
         end)
-
-        Enum.max(scored)
+        {index, _score} = Enum.max_by(scored_spaces, fn {_index, score} -> score end)
+        index
     end
-    
+
     def minimax(board, is_maximizing_player) do
         case Rules.status(board) do
             :winner -> value(is_maximizing_player)
@@ -28,25 +22,32 @@ defmodule TicTacToe.HardComputer do
 
     def score(board, is_maximizing_player) do
         if is_maximizing_player do
-            
-            board_spaces = Board.current_marks(board)
-            
-            indexed_spaces = Enum.with_index(board_spaces)
 
-            empty_spaces = Enum.filter(indexed_spaces, fn {space, index} -> space == :empty end)
+            empty_spaces = index_empty_spaces(board)
 
-            scored = Enum.map(empty_spaces, fn {space, index} -> 
-                new_board = Board.update(board, index, "X")
-                new_value = minimax(new_board, false)
+            scored_spaces = Enum.map(empty_spaces, fn {_space, index} ->
+                new_board = Board.update(board, index, "O")
+                minimax(new_board, false)
+
             end)
-            Enum.max(scored)
+            Enum.max(scored_spaces)
+        else
+            empty_spaces = index_empty_spaces(board)
+
+            scored_spaces = Enum.map(empty_spaces, fn {_space, index} ->
+                new_board = Board.update(board, index, "X")
+                minimax(new_board, true)
+            end)
+            Enum.min(scored_spaces)
         end
+    end
+
+    def index_empty_spaces(board) do
+        Board.current_marks(board)
+        |> Enum.with_index
+        |> Enum.filter(fn {space, _index} -> space == :empty end)
     end
 
     def value(is_maximizing_player) when is_maximizing_player == true, do: 1
     def value(is_maximizing_player) when is_maximizing_player == false, do: -1
-
-    def switch("X"), do: "O"
-    def switch("O"), do: "X"
-
 end
