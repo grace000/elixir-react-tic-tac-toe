@@ -1,9 +1,8 @@
 import Board from '../components/Board';
 import Message from '../components/Message';
 import React, { Component } from 'react';
-import axios from 'axios'
 import gameInfo from '../components/GameInfo';
-import helpers from '../utils/helpers'
+import helpers from '../utils/helpers';
 
 class Game extends Component {
   constructor(props) {
@@ -45,7 +44,7 @@ class Game extends Component {
       this.state.currentPlayer,
       requestedMove,
       this.state.gameType
-      ).then((response) => {
+      ).then(response => {
         this.setState({
           gameStatus: response.game_status,
           moves: Object.assign(this.state.moves, response.board),

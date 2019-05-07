@@ -67,5 +67,4 @@ defmodule TicTacToe.Rules do
           |> Enum.any?(fn x -> 
             Enum.count(Enum.uniq(x)) == 1 && !Enum.member?(x, :empty) end)
     end
-
 end
