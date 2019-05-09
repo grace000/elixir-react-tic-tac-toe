@@ -49,6 +49,7 @@ class Game extends Component {
       requestedMove,
       this.state.gameType
       ).then((response) => {
+        console.log(response)
         this.setState({
           gameStatus: response.game_status,
           moves: Object.assign(this.state.moves, response.board),

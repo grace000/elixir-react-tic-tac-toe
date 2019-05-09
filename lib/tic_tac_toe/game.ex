@@ -50,13 +50,15 @@ defmodule TicTacToe.Game do
     def switch_player("O"), do: "X"
 
     def game_status(game) do
-        cond do
-            game.game_status == :winner ->
+        cond do 
+            Rules.status(game.board) == :winner -> 
                 %{game |
-                    game_status: Rules.status(game.board), 
-                    winning_coordinates: Rules.winning_coordinates(game.board)} 
+                    game_status: Rules.status(game.board),
+                    winning_coordinates: Rules.winning_coordinates(game.board)
+                }
             true -> 
-                %{game | game_status: Rules.status(game.board)}
+                %{game | game_status: Rules.status(game.board)} 
         end
+        
     end
 end
