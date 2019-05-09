@@ -12,7 +12,7 @@ class Game extends Component {
       moves: {},
       currentPlayer: "",
       gameStatus: "",
-      winningCoordinates: {},
+      winningCoordinates: [],
       message: gameInfo.takeTurnMessage.playerOne,
       error: ""
     }
@@ -40,6 +40,25 @@ class Game extends Component {
     }
   }
 
+  winningSquare(positionNumber) {
+    switch(this.state.gameStatus){
+      case "winner":
+        return this.highlightSquare(positionNumber);
+      default: 
+        return "regular-square";
+    }
+  }
+
+  highlightSquare(positionNumber) {
+    let squareClass = "regular-square";
+    this.state.winningCoordinates.forEach(coord => {
+      if (coord === positionNumber) {
+        squareClass = "winning-square";
+      }
+    })
+    return squareClass;
+  }
+
   postNewMark(requestedMove) {
     helpers.makeBoardMarkRequest(
       this.state.moves, 
@@ -49,7 +68,6 @@ class Game extends Component {
       requestedMove,
       this.state.gameType
       ).then((response) => {
-        console.log(response)
         this.setState({
           gameStatus: response.game_status,
           moves: Object.assign(this.state.moves, response.board),
@@ -105,6 +123,7 @@ class Game extends Component {
           <Board 
             moves={moves}
             selectSquare={(positionNumber) => this.selectSquare(positionNumber)}
+            winningSquare={(positionNumber) => this.winningSquare(positionNumber)}
           />
         </section>
       </div>

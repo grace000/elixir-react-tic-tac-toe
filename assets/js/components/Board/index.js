@@ -3,20 +3,21 @@ import Square from '../Square';
 
 
 class Board extends Component {
-
+    
     renderSquare(positionNumber) {
-
+        
         return (
           <Square
             onClick={() => this.props.selectSquare(positionNumber)}
             value={this.props.moves[positionNumber] || "-" }
+            status={this.props.winningSquare(positionNumber)}
           />
         );
     }
     
     render() {
-
         return (
+            
             <div>
                 <div className="board-row">
                     {this.renderSquare(0)}

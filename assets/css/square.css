@@ -1,9 +1,19 @@
-.square {
+.regular-square {
     height: 5em;
     margin: 1rem;
     background: #eee;
     border-radius: 6px;
     border-color: #2f2d2d;
     color: black;
+    font-size: 20px;
+}
+
+.winning-square {
+    background: rgb(8, 177, 17);
+    height: 5em;
+    margin: 1rem;
+    border-radius: 6px;
+    border-color:rgb(8, 177, 17);
+    color: #eee;
     font-size: 20px;
 }
