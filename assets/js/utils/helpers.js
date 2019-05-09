@@ -14,7 +14,7 @@ const helpers = {
             }).catch(error => console.log(error));
     },
 
-    makeBoardMarkRequest(moves, gameStatus, currentPlayer, incomingMove, gameType) {
+    makeBoardMarkRequest(moves, gameStatus, currentPlayer, winningCoordinates, incomingMove, gameType) {
         return axios.post('/api/create_move', {
             headers: {"Content-Type": "application/json"},
             data: {
@@ -22,7 +22,8 @@ const helpers = {
                 gameStatus: gameStatus,
                 currentPlayer: currentPlayer,
                 incomingMove: incomingMove,
-                gameType: gameType
+                gameType: gameType,
+                winningCoordinates: winningCoordinates
             }
         }).then(response => {
             return response.data

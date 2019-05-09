@@ -38,7 +38,8 @@ defmodule TicTacToeWeb.GameController do
             current_player: data["currentPlayer"],
             game_status: data["gameStatus"],
             incoming_move: data["incomingMove"],
-            game_type: data["gameType"]
+            game_type: data["gameType"],
+            winning_coordinates: data["winningCoordinates"]
         }
     end
 
