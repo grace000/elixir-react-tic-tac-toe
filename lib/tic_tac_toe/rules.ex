@@ -85,8 +85,9 @@ defmodule TicTacToe.Rules do
 
     def all_elements_in_list_equal?(lists) do
         Enum.map(lists, fn list -> list end)
-          |> Enum.any?(fn x -> 
-            Enum.count(Enum.uniq(x)) == 1 && !Enum.member?(x, :empty) end)
+        |> Enum.any?(fn x -> 
+            Enum.count(Enum.uniq(x)) == 1 && !Enum.member?(x, :empty) 
+        end)
     end
 
     def winning_coordinates(board) do

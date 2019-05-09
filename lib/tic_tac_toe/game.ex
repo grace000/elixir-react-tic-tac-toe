@@ -39,7 +39,7 @@ defmodule TicTacToe.Game do
             game | 
             board: Board.update(game.board, EasyComputer.select_coordinate(Board.current_marks(game.board)), game.current_player),
             current_player: switch_player(game.current_player)
-          }
+        }
           true -> game
         end
     end

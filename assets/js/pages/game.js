@@ -78,7 +78,7 @@ class Game extends Component {
         message={""}
         error={""}
         status={gameStatus}
-        winner={currentPlayer == gameInfo.playerOne ? gameInfo.playerTwo : gameInfo.playerOne}
+        winner={currentPlayer == gameInfo.playerOne ? gameInfo.playerTwo.name : gameInfo.playerOne.name}
       />
 
     const gameInProgress =
