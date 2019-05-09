@@ -4,8 +4,6 @@ defmodule RulesTest do
     alias TicTacToe.Board, as: Board
     
     describe "status" do
-    
-    
         test " it returns in progress if there are no marks on the board" do
             board = Board.empty_board
 
@@ -147,11 +145,75 @@ defmodule RulesTest do
                 :empty,
                 :empty,
                 :empty
-               ]
+            ]
         
         lists = Rules.rows(board_marks)
 
         assert Rules.all_elements_in_list_equal?(lists) == false
+        end
+    end
+
+    describe "winning_token" do
+        test "it returns winning token X" do
+            board = Board.empty_board
+            |> Board.update(2, "X")
+            |> Board.update(1, "O")
+            |> Board.update(5, "X")
+            |> Board.update(4, "O")
+            |> Board.update(8, "X")
+
+            assert Rules.winning_token(board) == "X"
+        end
+
+        test "it returns winning token O" do
+            board = Board.empty_board
+            |> Board.update(2, "X")
+            |> Board.update(0, "O")
+            |> Board.update(4, "O")
+            |> Board.update(8, "O")
+
+            assert Rules.winning_token(board) == "O"
+        end
+    end
+
+    describe "winning_coordinates" do
+        test " it returns winning coordinates 3,4,5" do
+            board = Board.empty_board
+            |> Board.update(3, "X")
+            |> Board.update(4, "X")
+            |> Board.update(5, "X")
+
+            assert Rules.winning_coordinates(board) == [3,4,5]
+        end
+        
+        test " it returns winning coordinates 6,7,8" do
+            board = Board.empty_board
+            |> Board.update(6, "X")
+            |> Board.update(3, "O")
+            |> Board.update(7, "X")
+            |> Board.update(8, "X")
+
+            assert Rules.winning_coordinates(board) == [6,7,8]
+        end
+
+        test " it returns winning coordinates 0,4,8" do
+            board = Board.empty_board
+            |> Board.update(0, "X")
+            |> Board.update(3, "O")
+            |> Board.update(4, "X")
+            |> Board.update(8, "X")
+
+            assert Rules.winning_coordinates(board) == [0,4,8]
+        end
+
+        test " it returns winning coordinates 0,3,6" do
+            board = Board.empty_board
+            |> Board.update(0, "X")
+            |> Board.update(3, "X")
+            |> Board.update(4, "O")
+            |> Board.update(6, "X")
+
+            assert Rules.winning_coordinates(board) == [0,3,6]
         end
     end
 end

@@ -34,11 +34,19 @@ defmodule TicTacToe.Game do
     def make_move(game, :easy_computer) do
         cond do
             game.game_status == :in_progress -> 
+<<<<<<< HEAD
                 %{ 
                     game | 
                     board: Board.update(game.board, EasyComputer.select_coordinate(Board.current_marks(game.board)), game.current_player),
                     current_player: switch_player(game.current_player)
                 }
+=======
+        %{ 
+            game | 
+            board: Board.update(game.board, EasyComputer.select_coordinate(Board.current_marks(game.board)), game.current_player),
+            current_player: switch_player(game.current_player)
+        }
+>>>>>>> refactored-rules
           true -> game
         end
     end
