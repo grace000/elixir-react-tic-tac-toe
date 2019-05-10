@@ -73,7 +73,7 @@ class Game extends Component {
           moves: Object.assign(this.state.moves, response.board),
           winningCoordinates: response.winning_coordinates,
           currentPlayer: response.current_player,
-          message: response.current_player == gameInfo.playerOne ? gameInfo.takeTurnMessage.playerOne : gameInfo.takeTurnMessage.playerTwo
+          message: response.current_player == gameInfo.playerOne.token ? gameInfo.takeTurnMessage.playerOne : gameInfo.takeTurnMessage.playerTwo
         });
     }).catch(error => {
       const errorCode = error.response.status;
