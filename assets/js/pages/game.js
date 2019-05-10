@@ -114,7 +114,7 @@ class Game extends Component {
     return (
       <div>
         <section className="phx-hero">
-          <h1>{helpers.removeUnderscores(this.props.location.state.message)} game</h1>
+          <h1>{helpers.removeUnderscores(this.props.location.state.message).toUpperCase()} GAME</h1>
         </section>
         <section> 
           { this.displayStatus(gameStatus) ? gameOver : gameInProgress }
