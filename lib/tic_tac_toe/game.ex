@@ -10,7 +10,8 @@ defmodule TicTacToe.Game do
         :current_player,
         :incoming_move, 
         :board,
-        :game_type
+        :game_type,
+        :winning_coordinates
     ]
 
     def setup_new_game(game_type) do
@@ -19,7 +20,8 @@ defmodule TicTacToe.Game do
             game_status: "", 
             current_player: "X", 
             incoming_move: nil,
-            board: Board.empty_board
+            board: Board.empty_board,
+            winning_coordinates: nil
         }
     end
     
@@ -39,7 +41,7 @@ defmodule TicTacToe.Game do
                     board: Board.update(game.board, EasyComputer.select_coordinate(Board.current_marks(game.board)), game.current_player),
                     current_player: switch_player(game.current_player)
                 }
-          true -> game
+            true -> game
         end
     end
 
@@ -48,9 +50,15 @@ defmodule TicTacToe.Game do
     def switch_player("O"), do: "X"
 
     def game_status(game) do
-        %{
-            game |
-            game_status: Rules.status(game.board)
-        }
+        cond do 
+            Rules.status(game.board) == :winner -> 
+                %{game |
+                    game_status: Rules.status(game.board),
+                    winning_coordinates: Rules.winning_coordinates(game.board)
+                }
+            true -> 
+                %{game | game_status: Rules.status(game.board)} 
+        end
+        
     end
 end

@@ -10,7 +10,8 @@ defmodule GameTest do
             current_player: "X", 
             incoming_move: nil,
             board: Board.empty_board,
-            game_type: "human_vs_human"
+            game_type: "human_vs_human",
+            winning_coordinates: nil
         }
         
         assert Game.setup_new_game("human_vs_human") == game
@@ -83,7 +84,8 @@ defmodule GameTest do
                 game_status: "", 
                 current_player: "X", 
                 incoming_move: 1,
-                board: %{}
+                board: %{},
+                winning_coordinates: nil
             }
         
             _updated_game = Game.make_move(game)
@@ -92,7 +94,8 @@ defmodule GameTest do
                 game_status: :in_progress, 
                 current_player: "X", 
                 incoming_move: 2,
-                board: %{"1" => "X"}
+                board: %{"1" => "X"},
+                winning_coordinates: nil
             }
                                     
             _second_update = Game.make_move(second_game)
@@ -101,7 +104,8 @@ defmodule GameTest do
                 game_status: :in_progress, 
                 current_player: "X",
                 incoming_move: 0, 
-                board: %{"1" => "X", "2" => "X"}
+                board: %{"1" => "X", "2" => "X"},
+                winning_coordinates: nil
             }
             
             third_update = Game.make_move(third_game)
@@ -109,7 +113,8 @@ defmodule GameTest do
                 game_status: :winner, 
                 current_player: "O",
                 incoming_move: 0, 
-                board: %{1 => "X", 2 => "X", 0 => "X"}
+                board: %{1 => "X", 2 => "X", 0 => "X"},
+                winning_coordinates: [0,1,2]
             }
             assert third_update.board == %{1 => "X", 2 => "X", 0 => "X"}
 
