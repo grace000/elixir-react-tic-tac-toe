@@ -30,7 +30,7 @@ class Welcome extends Component {
                   <h1>Welcome to Tic Tac Toe!</h1>
                 </section>
                 <section className="game-selection">
-                  <div>
+                  <div className="game-selection-buttons">
                     {this.renderGameSelectSquare("human_vs_human")}
                     {this.renderGameSelectSquare("easy_computer")}
                   </div>
