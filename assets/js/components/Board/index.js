@@ -10,7 +10,7 @@ class Board extends Component {
           <Square
             onClick={() => this.props.selectSquare(positionNumber)}
             value={this.props.moves[positionNumber] || "-" }
-            status={this.props.winningSquare(positionNumber)}
+            style={this.props.winningSquare(positionNumber)}
           />
         );
     }
